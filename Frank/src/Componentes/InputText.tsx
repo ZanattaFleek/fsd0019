@@ -5,7 +5,7 @@ import { FormControl } from '@mui/material';
 
 interface InputTextInterface {
   label: string,
-  type: string,
+  tipo: string,
   disabled?: boolean,
   dados: { [key: string]: string | number | readonly string[] | undefined | any },
   field: string,
@@ -13,7 +13,7 @@ interface InputTextInterface {
 }
 
 export default function InputText(
-  { label, type, dados, field, setState, disabled = false }: InputTextInterface) {
+  { label, tipo, dados, field, setState, disabled = false }: InputTextInterface) {
 
   return (
     <>
@@ -25,7 +25,7 @@ export default function InputText(
           value={dados[field]}
           disabled={disabled}
           onChange={(e: any) => setState({ ...dados, [field]: e.target.value })}
-
+          type={tipo}
         />
       </FormControl>
     </>

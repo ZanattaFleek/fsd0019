@@ -372,7 +372,7 @@ export default function Escola() {
 
               <>
                 <Grid item xs={12} sm={10} sx={{ mb: 3 }}>
-                  <InputText label="Pesquisa" type="text" dados={pesquisa} field="nome" setState={setPesquisa} />
+                  <InputText label="Pesquisa" tipo="text" dados={pesquisa} field="nome" setState={setPesquisa} />
 
                 </Grid>
                 <Grid item xs={12} sm={2} sx={{ textAlign: { xs: 'right', sm: 'center' } }}>
@@ -392,7 +392,7 @@ export default function Escola() {
             {localState.acao !== 'pesquisando' &&
               <>
                 <Grid item xs={12} sm={10} mt={3}>
-                  <InputText label="Nome" type="text" dados={escola} field="nome" setState={setEscola} disabled={localState.acao === 'excluindo' ? true : false} />
+                  <InputText label="Nome" tipo="text" dados={escola} field="nome" setState={setEscola} disabled={localState.acao === 'excluindo' ? true : false} />
                 </Grid>
                 <Grid item xs={12} sm={2} mt={3} sx={{ pl: { sm: 2 } }}>
                   <FormControlLabel
@@ -408,7 +408,7 @@ export default function Escola() {
                   />
                 </Grid>
                 <Grid item xs={12} sm={8} mt={3}>
-                  <InputText label="CNPJ" type="text" dados={escola} field="cnpj" setState={setEscola} disabled={localState.acao === 'excluindo' ? true : false} />
+                  <InputText label="CNPJ" tipo="text" dados={escola} field="cnpj" setState={setEscola} disabled={localState.acao === 'excluindo' ? true : false} />
                 </Grid>
 
                 <Grid item xs={12} sm={2} mt={3} ml={10} sx={{ pl: { sm: 2 } }} borderRadius={3} border={1} borderColor={'lightgray'}>
@@ -426,7 +426,7 @@ export default function Escola() {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={8} mt={3} mr={1}>
-                  <InputText label="e-mail" type="text" dados={escola} field="email" setState={setEscola} disabled={localState.acao === 'excluindo' ? true : false} />
+                  <InputText label="e-mail" tipo="text" dados={escola} field="email" setState={setEscola} disabled={localState.acao === 'excluindo' ? true : false} />
                 </Grid>
                 <Grid item xs={12} sm={3} mt={5}>
                   <Box>
