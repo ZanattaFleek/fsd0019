@@ -37,6 +37,7 @@ export default function Aula() {
           <Grid item xs={8}>
             <Item>xs=8</Item>
           </Grid>
+          
         </Grid>
       </Box>
     </>
