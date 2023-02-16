@@ -9,5 +9,23 @@ export const theme = createTheme({
     secondary:{
       main: red[500],
     },
+    neutral: {
+      main: '#64748B',
+      contrastText: '#fff',
+    },
   },
 })
+
+declare module '@mui/material/styles' {
+
+
+  interface Palette {
+    neutral: Palette['primary'];
+  }
+
+  interface PaletteOptions {
+    neutral: PaletteOptions['primary'];
+  }
+
+
+}

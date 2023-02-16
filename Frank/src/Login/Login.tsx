@@ -135,20 +135,3 @@ export default function Login() {
   );
 
 }
-
-
-
-{/*<div className="borda">
-        <h1>Login.tsx</h1>
-
-        <input type="text" placeholder='Login:' id="txtLogin"
-          onChange={(e) => setLogin({ ...login, usuario: e.target.value })}
-        />
-
-        <input type="password" placeholder='Senha:' id="txtSenha"
-          onChange={(e) => setLogin({ ...login, senha: e.target.value })}
-        />
-
-        <input type="button" value="Logar" onClick={logar} />
-
-  </div>*/}

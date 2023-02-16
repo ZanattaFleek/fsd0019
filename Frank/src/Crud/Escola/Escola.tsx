@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { ContextoGlobal, ContextoGlobalInterface } from '../../Contextos/ContextoGlobal';
 import { EscolaInterface } from '../../Interfaces/EscolaInterfaces';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+//import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { URL_SERVIDOR } from '../../Config/Setup';
 import InputText from '../../Componentes/InputText';
 import ClsEscola from './ClsEscola';
@@ -34,31 +34,6 @@ const TEMPO_REFRESH_TEMPORARIO = 500
 interface PesquisaInterface {
   nome: string
 }
-
-/*const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));*/
-
-
-/*function createData(
-  idEscola: number,
-  nome: string,
-  cnpj: string,
-  email: string,
-  acoes: any
-) {
-  return {
-    idEscola,
-    nome,
-    cnpj,
-    email,
-    acoes
-  };
-}*/
 
 export default function Escola() {
 
@@ -140,7 +115,6 @@ export default function Escola() {
     return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
   }
 
-  //const [valueStart, setValueStart] = React.useState<number | null>(2);
   const [hover, setHover] = React.useState(-1);
 
     const handleChangeFederacao = (event: SelectChangeEvent) => {
@@ -383,9 +357,6 @@ export default function Escola() {
                   <Button variant='contained' onClick={() => btIncluir()}>Incluir</Button>
 
                 </Grid>
-
-
-
               </>
             }
 
@@ -529,34 +500,4 @@ export default function Escola() {
       </Container >
     </>
   );
-
 }
-
-
-{/*<table className='clsTableEscola'>
-                <thead>
-                  <tr>
-                    <td>Nome</td>
-                    <td>CNPJ</td>
-                    <td>e-mail</td>
-                    <td>Ações</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    printTable()
-                  }
-                </tbody>
-            </table>*/}
-
-{/*<Box sx={{ height: 400, width: '100%' }}>
-                <DataGrid
-                  rows={rows}
-                  columns={columns}
-                  pageSize={5}
-                  rowsPerPageOptions={[5]}
-                  checkboxSelection
-                  disableSelectionOnClick
-                  experimentalFeatures={{ newEditingApi: true }}
-                />
-            </Box>*/}

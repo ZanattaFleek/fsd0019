@@ -12,8 +12,8 @@ import useLoginState from '../GlobalStates/LoginState';
 import useMensagemState from '../GlobalStates/MensagemState';
 
 import Login from '../Login/Login';
-import Footer from './Footer';
-import Header from './Header';
+import Appbar from './Appbar';
+
 
 export default function LayOut() {
 
@@ -37,9 +37,9 @@ export default function LayOut() {
             {loginState.logado ?
               <>
                 <Mensagem />
-                <Header />
+                <Appbar />
                 <Outlet />
-                <Footer />
+                
               </> :
               <>
                 <Login />
