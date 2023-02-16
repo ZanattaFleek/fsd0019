@@ -5,6 +5,7 @@ import InputText from '../Componentes/InputText';
 import { URL_SERVIDOR } from '../Config/Setup';
 import { theme } from '../Config/Theme';
 import { ContextoGlobal, ContextoGlobalInterface } from '../Contextos/ContextoGlobal';
+import Copyright from '../Layout/Copyright';
 
 import './Login.css'
 
@@ -115,20 +116,18 @@ export default function Login() {
                 </Button>
               </Grid>
             </Grid>
+          <Copyright sx={{ mt: 8, mb: 4 }} />
           </Box>
           
-            <Box maxWidth='100%' sx={{ 
+           {/*  <Box maxWidth='90%' sx={{ 
             marginTop: 3,
-            padding: 1,
+            padding: 2,
             flexGrow: 1,
             backgroundColor: theme.palette.primary.main,
             
             }}>
             
-            <Typography variant="h6" align='center' color='white'>
-              Copyrigth 2023
-            </Typography>
-            </Box>
+            </Box>*/}
           </Paper>
         
       </Container>
