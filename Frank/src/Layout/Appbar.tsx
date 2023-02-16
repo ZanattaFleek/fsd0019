@@ -5,14 +5,22 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Avatar, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, styled, Tooltip, Typography } from '@mui/material';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import SchoolIcon from '@mui/icons-material/School';
+import HomeIcon from '@mui/icons-material/Home';
+import { useNavigate } from 'react-router-dom';
 
 const settings = ['Perfil', 'Conta', 'Dashboard', 'Logout'];
 const drawerWidth = 240;
 
 
 export default function Appbar() {
+
+    const navegar = useNavigate();
+
+    const irPara = (link: string) => {
+        navegar(link)
+        setOpen(!open)
+    }
 
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -90,19 +98,26 @@ export default function Appbar() {
                 open={open}
                 onClose={handleDrawerOpenClose}
             >
-                
+
                 <Box sx={{ overflow: 'auto' }}>
                     <List>
-                        {['Home', 'Escola', 'Login'].map((text, index) => (
-                            <ListItem key={text} disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
+
+                        <ListItem disablePadding>
+                            <ListItemButton >
+                                <ListItemIcon onClick={() => irPara('/')}>
+                                    <HomeIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={'Home'} />
+                            </ListItemButton>
+                        </ListItem>
+                        <ListItem disablePadding>
+                            <ListItemButton >
+                                <ListItemIcon onClick={() => irPara('/escola')}>
+                                    <SchoolIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={'Escola'} />
+                            </ListItemButton>
+                        </ListItem>
                     </List>
                 </Box>
             </Drawer>
