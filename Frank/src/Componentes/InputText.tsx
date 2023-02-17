@@ -19,6 +19,7 @@ export default function InputText(
     <>
       <FormControl sx={{ width: '100%' }}>
         <TextField
+          size="small"
           sx={{ my: 0, py: 0, height: 40 }}
           id="outlined-name"
           label={label}

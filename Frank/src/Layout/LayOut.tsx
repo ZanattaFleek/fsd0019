@@ -15,12 +15,10 @@ import Login from '../Login/Login';
 import Appbar from './Appbar';
 import Footer from './Footer';
 
-import { styled, Toolbar } from '@mui/material';
+import { Toolbar } from '@mui/material';
 
 
 export default function LayOut() {
-
-  const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
   const { loginState, setLoginState } = useLoginState()
   const { layoutState, setLayoutState } = useLayoutState()
