@@ -1,0 +1,15 @@
+.clsTableEscola, 
+.clsTableEscola tr,
+.clsTableEscola td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.clsTableEscola {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+label, input {
+  display: block;
+}
