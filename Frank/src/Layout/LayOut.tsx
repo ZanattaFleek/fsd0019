@@ -13,6 +13,7 @@ import useMensagemState from '../GlobalStates/MensagemState';
 
 import Login from '../Login/Login';
 import Appbar from './Appbar';
+import Footer from './Footer';
 
 
 export default function LayOut() {
@@ -38,8 +39,14 @@ export default function LayOut() {
               <>
                 <Mensagem />
                 <Appbar />
+                <p>1 Fleek Cursos</p>
+                <p>2 Fleek Cursos</p>
+                <p>3 Fleek Cursos</p>
+                <p>4 Fleek Cursos</p>
                 <Outlet />
-                
+                <p>Fleek Cursos 2</p>
+                <Footer />
+
               </> :
               <>
                 <Login />
