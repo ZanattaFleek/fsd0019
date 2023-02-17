@@ -91,7 +91,7 @@ export default function Appbar() {
                             >
                                 {settings.map((setting, index) => (
                                     <MenuItem key={index} onClick={() => irPara(setting.caminho)}>
-                                        <Typography textAlign="center">{setting.opcao}</Typography>
+                                        <Typography component='p' variant='overline' textAlign="center">{setting.opcao}</Typography>
                                     </MenuItem>
                                 ))}
                             </Menu>

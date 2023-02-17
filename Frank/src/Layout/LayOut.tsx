@@ -15,8 +15,12 @@ import Login from '../Login/Login';
 import Appbar from './Appbar';
 import Footer from './Footer';
 
+import { styled, Toolbar } from '@mui/material';
+
 
 export default function LayOut() {
+
+  const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
   const { loginState, setLoginState } = useLoginState()
   const { layoutState, setLayoutState } = useLayoutState()
@@ -39,13 +43,10 @@ export default function LayOut() {
               <>
                 <Mensagem />
                 <Appbar />
-                <p>1 Fleek Cursos</p>
-                <p>2 Fleek Cursos</p>
-                <p>3 Fleek Cursos</p>
-                <p>4 Fleek Cursos</p>
                 <Outlet />
-                <p>Fleek Cursos 2</p>
+                <Toolbar />
                 <Footer />
+
 
               </> :
               <>
