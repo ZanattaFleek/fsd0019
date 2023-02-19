@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { createBrowserRouter } from 'react-router-dom';
+import Cao from '../Crud/Cao/Cao';
 import Escola from '../Crud/Escola/Escola';
 import ErroAplicacao from '../Layout/ErroAplicacao';
 import LayOut from '../Layout/LayOut';
@@ -15,7 +16,13 @@ export const router = createBrowserRouter([
       path: "escola",
       element: <Escola />,
       errorElement: <ErroAplicacao />
-    }]
+    },
+    {
+      path: "cao",
+      element: <Cao />,
+      errorElement: <ErroAplicacao />
+    }
+  ]
   },
   {
     path: "*",

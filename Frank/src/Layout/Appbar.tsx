@@ -1,12 +1,88 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Avatar, Divider, Drawer, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
+import { Avatar, Divider, Drawer, List, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import MenuListItem from './MenuListItem';
+import { ContextoGlobal, ContextoGlobalInterface } from '../Contextos/ContextoGlobal';
+
+export interface MenuOpcoesInterface {
+    descricao: string
+    path: string
+    icon: string
+    modulo: string
+    permissao: string
+    filhos: Array<MenuOpcoesInterface>
+}
+const MENU: Array<MenuOpcoesInterface> = [
+    {
+        descricao: 'Cadastros',
+        path: '',
+        icon: 'app_registration_outlined',
+        modulo: '',
+        permissao: '',
+        filhos: [{
+            descricao: 'Atletas',
+            path: '/Atletas',
+            icon: 'app_registration_outlined',
+            modulo: '',
+            permissao: '',
+            filhos: []
+        },
+        {
+            descricao: 'Cão',
+            path: '/Cao',
+            icon: 'app_registration_outlined',
+            modulo: '',
+            permissao: '',
+            filhos: []
+        },
+        {
+            descricao: 'Escolas',
+            path: '/Escola',
+            icon: 'app_registration_outlined',
+            modulo: '',
+            permissao: '',
+            filhos: []
+        },
+        {
+            descricao: 'Duplas',
+            path: '/Duplas',
+            icon: 'app_registration_outlined',
+            modulo: '',
+            permissao: '',
+            filhos: []
+        },
+        ]
+    },
+    {
+        descricao: 'Sistema',
+        path: '',
+        icon: 'app_registration_outlined',
+        modulo: '',
+        permissao: '',
+        filhos: [{
+            descricao: 'Grupos de Usuários',
+            path: '/Grupos',
+            icon: 'people_alt_outlined',
+            modulo: '',
+            permissao: '',
+            filhos: []
+        },
+        {
+            descricao: 'Usuários',
+            path: '/Usuarios',
+            icon: 'person_outline_outlined',
+            modulo: '',
+            permissao: '',
+            filhos: []
+        }
+        ]
+    }
+]
 
 interface menuSettingsInterface {
     opcao: string
@@ -22,11 +98,13 @@ const drawerWidth = 240;
 
 export default function Appbar() {
 
+    const { layoutState, setLayoutState } = useContext(ContextoGlobal) as ContextoGlobalInterface
+
     const navegar = useNavigate();
 
     const irPara = (link: string) => {
         navegar(link)
-        setOpen(!open)
+        setLayoutState({ ...layoutState, exibirMenu: !layoutState.exibirMenu })
         handleCloseUserMenu()
     }
 
@@ -40,10 +118,8 @@ export default function Appbar() {
         setAnchorElUser(null);
     };
 
-    const [open, setOpen] = React.useState(false);
-
     const handleDrawerOpenClose = () => {
-        setOpen(!open);
+        setLayoutState({ ...layoutState, exibirMenu: !layoutState.exibirMenu })
     };
 
     return (
@@ -111,10 +187,18 @@ export default function Appbar() {
                     }}
                     variant="temporary"
                     anchor="left"
-                    open={open}
+                    open={layoutState.exibirMenu}
                     onClose={handleDrawerOpenClose}
                 >
-                    <MenuListItem />
+                    <Box sx={{ overflow: 'auto', mt: 5 }}>
+                        <List>
+                            {MENU.map((menu: MenuOpcoesInterface, i:number) => (
+
+                                <MenuListItem deslocamento={0} key={i} menu={menu} />
+                            ))}
+
+                        </List>
+                    </Box>
                 </Drawer>
             </Box>
         </>
