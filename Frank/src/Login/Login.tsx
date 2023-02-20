@@ -2,18 +2,15 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Box, Button, Container, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, Typography } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import InputText from '../Componentes/InputText';
+
 import { URL_SERVIDOR } from '../Config/Setup';
 import { theme } from '../Config/Theme';
 import { ContextoGlobal, ContextoGlobalInterface } from '../Contextos/ContextoGlobal';
 import Copyright from '../Layout/Copyright';
 
-
-import './Login.css'
-
 interface LoginInterface {
   usuario: string
   senha: string
-  token: string
 }
 
 export default function Login() {
@@ -26,7 +23,7 @@ export default function Login() {
   };
 
   const [login, setLogin] = useState<LoginInterface>({
-    usuario: '', senha: '', token: ''
+    usuario: '', senha: ''
   })
 
   const setLoginState = (useContext(ContextoGlobal) as ContextoGlobalInterface).setLoginState
@@ -40,31 +37,27 @@ export default function Login() {
     urlPesquisa = urlPesquisa.concat('&senha=')
     urlPesquisa = urlPesquisa.concat(login.senha)
 
-    // console.log(urlPesquisa)
-
     setTimeout(() => {
 
       fetch(urlPesquisa).then(rs => {
         return rs.json()
-      }).then((rs: Array<LoginInterface>) => {
+      }).then((rs) => {
 
         if (rs.length > 0) {
 
           setLoginState({
             logado: true,
             nome: rs[0].usuario,
-            token: rs[0].token
+            token: rs[0].token,
+            avatar: rs[0].avatar
           })
-
         } else {
           console.log('Usuário Não Encontrado')
         }
       }).catch(e => {
         console.log('Erro no Fetch....', e)
       })
-
     }, 3000)
-
   }
 
   return (
@@ -82,14 +75,15 @@ export default function Login() {
                   field="usuario"
                   label="Login"
                   setState={setLogin}
-                  tipo="text"
+                  
                 />
               </Grid>
               <Grid item xs={12} md={12} m={2}>
 
                 <FormControl sx={{ width: '100%' }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
+                  <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
                   <OutlinedInput
+                    size='small'
                     onChange={(e) => setLogin({ ...login, senha: e.target.value })}
                     id="outlined-adornment-password"
                     type={showPassword ? 'text' : 'password'}
@@ -108,7 +102,7 @@ export default function Login() {
                     label="Senha"
                   />
                 </FormControl>
-                
+
               </Grid>
               <Grid item xs={12} md={12} ml={34} >
                 <Button
@@ -117,20 +111,9 @@ export default function Login() {
                 </Button>
               </Grid>
             </Grid>
-          <Copyright sx={{ mt: 8, mb: 4 }} />
+            <Copyright sx={{ mt: 8, mb: 4 }} />
           </Box>
-          
-           {/*  <Box maxWidth='90%' sx={{ 
-            marginTop: 3,
-            padding: 2,
-            flexGrow: 1,
-            backgroundColor: theme.palette.primary.main,
-            
-            }}>
-            
-            </Box>*/}
-          </Paper>
-        
+        </Paper>
       </Container>
     </>
   );

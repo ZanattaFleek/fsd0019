@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -27,7 +27,7 @@ const MENU: Array<MenuOpcoesInterface> = [
         filhos: [{
             descricao: 'Atletas',
             path: '/Atletas',
-            icon: 'app_registration_outlined',
+            icon: 'personoutlinetwotone',
             modulo: '',
             permissao: '',
             filhos: []
@@ -35,7 +35,7 @@ const MENU: Array<MenuOpcoesInterface> = [
         {
             descricao: 'Cão',
             path: '/Cao',
-            icon: 'app_registration_outlined',
+            icon: 'pets',
             modulo: '',
             permissao: '',
             filhos: []
@@ -43,7 +43,7 @@ const MENU: Array<MenuOpcoesInterface> = [
         {
             descricao: 'Escolas',
             path: '/Escola',
-            icon: 'app_registration_outlined',
+            icon: 'school',
             modulo: '',
             permissao: '',
             filhos: []
@@ -51,7 +51,7 @@ const MENU: Array<MenuOpcoesInterface> = [
         {
             descricao: 'Duplas',
             path: '/Duplas',
-            icon: 'app_registration_outlined',
+            icon: 'peoplealt',
             modulo: '',
             permissao: '',
             filhos: []
@@ -74,12 +74,19 @@ const MENU: Array<MenuOpcoesInterface> = [
         },
         {
             descricao: 'Usuários',
-            path: '/Usuarios',
+            path: '/Usuario',
             icon: 'person_outline_outlined',
             modulo: '',
             permissao: '',
-            filhos: []
-        }
+            filhos: [{
+                descricao: 'Alterar Senha',
+                path: '/AlterarSenha',
+                icon: 'people_alt_outlined',
+                modulo: '',
+                permissao: '',
+                filhos: []
+            }],
+        },
         ]
     }
 ]
@@ -93,13 +100,13 @@ const settings: Array<menuSettingsInterface> = [
     { opcao: 'Perfil', caminho: '/' },
     { opcao: 'Logout', caminho: '/' }
 ];
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 
 export default function Appbar() {
 
     const { layoutState, setLayoutState } = useContext(ContextoGlobal) as ContextoGlobalInterface
-
+    const avatarLogin:string = (useContext(ContextoGlobal) as ContextoGlobalInterface).loginState.avatar
     const navegar = useNavigate();
 
     const irPara = (link: string) => {
@@ -143,7 +150,7 @@ export default function Appbar() {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Configurações">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 0 }}>
-                                    <Avatar alt="Z" src="/logo192.png" />
+                                    <Avatar alt="Foto de perfil" src={avatarLogin} />
                                 </IconButton>
                             </Tooltip>
                             <Menu

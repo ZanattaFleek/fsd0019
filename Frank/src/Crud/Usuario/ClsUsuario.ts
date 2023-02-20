@@ -7,16 +7,16 @@ export default class ClsEscola {
 
   public btEditar<T>(
     globalContext: ContextoGlobalInterface,
-    idEscola: number,
-    setEscola: React.Dispatch<React.SetStateAction<T>>,
+    idUsurio: number,
+    setUsuario: React.Dispatch<React.SetStateAction<T>>,
     setLocalState: React.Dispatch<React.SetStateAction<{ acao: string; }>>,
     acao: string
   ) {
-    globalContext.setMensagemState({ exibir: true, mensagem: 'Pesquisando Escola', tipo: 'processando' })
+    globalContext.setMensagemState({ exibir: true, mensagem: 'Pesquisando Usuário', tipo: 'processando' })
 
     setTimeout(() => {
 
-      fetch(URL_SERVIDOR.concat('/escola/'.concat(idEscola.toString())), {
+      fetch(URL_SERVIDOR.concat('/usuarios/'.concat(idUsurio.toString())), {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -29,19 +29,19 @@ export default class ClsEscola {
           globalContext.setMensagemState({ exibir: false, mensagem: '', tipo: 'aviso' })
 
           // Envio somente os dados para o próximo Then....
-          //console.log(rs.json())
+          console.log(rs.json())
           return rs.json()
 
         } else {
-          globalContext.setMensagemState({ exibir: true, mensagem: 'Erro ao Pesquisar Escola!!!', tipo: 'erro' })
+          globalContext.setMensagemState({ exibir: true, mensagem: 'Erro ao Pesquisar Usuário!!!', tipo: 'erro' })
         }
-      }).then(rsEscola => {
-        
-        setEscola(rsEscola)
+      }).then(rsUsuarios => {
+        console.log(rsUsuarios)
+        setUsuario(rsUsuarios)
         setLocalState({ acao: acao })
 
       }).catch(() => {
-        globalContext.setMensagemState({ exibir: true, mensagem: 'Erro no Servidor. Não foi possível pesquisar Escola!!!', tipo: 'erro' })
+        globalContext.setMensagemState({ exibir: true, mensagem: 'Erro no Servidor. Não foi possível pesquisar Usuário!!!', tipo: 'erro' })
       })
 
     }, TEMPO_REFRESH_TEMPORARIO)

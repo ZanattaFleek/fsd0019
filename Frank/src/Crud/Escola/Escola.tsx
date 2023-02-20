@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
 import { ContextoGlobal, ContextoGlobalInterface } from '../../Contextos/ContextoGlobal';
 import { EscolaInterface } from '../../Interfaces/EscolaInterfaces';
-//import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { URL_SERVIDOR } from '../../Config/Setup';
 import InputText from '../../Componentes/InputText';
 import ClsEscola from './ClsEscola';
@@ -15,21 +14,25 @@ import React from 'react';
 import StarIcon from '@mui/icons-material/Star';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { styled } from '@mui/material/styles';
 
-
-
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
 
 const TEMPO_REFRESH_TEMPORARIO = 500
-
-//interface LocalStateInterface {
-//  acao: 'incluindo' | 'excluindo' | 'pesquisando' | 'editando'
-//}
 
 interface PesquisaInterface {
   nome: string
@@ -59,7 +62,7 @@ export default function Escola() {
 
   const printTable = () =>
     
-      <TableBody>
+    <>
         {rsPesquisa.map((row) => (
           <TableRow
             key={row.idEscola}
@@ -76,20 +79,20 @@ export default function Escola() {
                 type="button"
                 sx={{ p: '10px' }}
                 aria-label="delete"
-                onClick={() => btEditar(escola.idEscola, 'excluindo')}>
+                onClick={() => btEditar(row.idEscola, 'excluindo')}>
                 <DeleteOutlineOutlinedIcon />
               </IconButton>
               <IconButton
                 type="button"
                 sx={{ p: '10px' }}
                 aria-label="editar"
-                onClick={() => btEditar(escola.idEscola, 'editando')}>
+                onClick={() => btEditar(row.idEscola, 'editando')}>
                 <EditOutlinedIcon />
               </IconButton>
             </TableCell>
           </TableRow>
         ))}
-      </TableBody>
+      </>  
 
   const federacoes = [
     'Federação Brasileira',
@@ -132,8 +135,9 @@ export default function Escola() {
   const handleChangeTipo = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEscola({...escola, tipo:(event.target as HTMLInputElement).value});
   };
+  
   const btEditar = (idEscola: number, acao: string) => {
-
+    
     let clsEscola: ClsEscola = new ClsEscola()
 
     clsEscola.btEditar<EscolaInterface>(
@@ -268,7 +272,7 @@ export default function Escola() {
             qualidade:2
            })
           globalContext.setMensagemState({ exibir: true, mensagem: 'Escola Cadastrada com Sucesso', tipo: 'aviso' })
-          //btPesquisar()
+          
         } else {
           globalContext.setMensagemState({ exibir: true, mensagem: 'Erro ao Incluir Escola!!!', tipo: 'erro' })
         }
@@ -306,7 +310,6 @@ export default function Escola() {
         }
       }).then(rsEscolas => {
 
-        console.log(JSON.stringify(rsEscolas))
         setRsPesquisa(rsEscolas)
 
       }).catch(() => {
@@ -331,9 +334,9 @@ export default function Escola() {
 
             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
               <Typography component="h5" variant="h5" align="left">
-                Cadastro de Produtos
+                Cadastro de Escola
                 <Typography variant="body2" gutterBottom>
-                  Cadastro de todos os produtos sfdgsfdgsg sfgsdfg sdfgsdg sdgdfg
+                  Inclusão de uma nova escola
                 </Typography>
               </Typography>
 
@@ -345,11 +348,11 @@ export default function Escola() {
             {localState.acao === 'pesquisando' &&
 
               <>
-                <Grid item xs={12} sm={10} sx={{ mb: 3 }}>
-                  <InputText label="Pesquisa" tipo="text" dados={pesquisa} field="nome" setState={setPesquisa} />
+                <Grid item xs={12} sm={10} sx={{ mb: 5 }}>
+                  <InputText label='' placeholder='Pesquisar' tipo="text" dados={pesquisa} field="nome" setState={setPesquisa} />
 
                 </Grid>
-                <Grid item xs={12} sm={2} sx={{ textAlign: { xs: 'right', sm: 'center' } }}>
+                <Grid item xs={12} sm={2} sx={{ textAlign: { xs: 'right', sm: 'center' }, mb: 5 }}>
                   <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={() => btPesquisar()}>
                     <SearchIcon />
                   </IconButton>
@@ -477,14 +480,14 @@ export default function Escola() {
             {
               localState.acao === 'pesquisando' &&
               <TableContainer component={Paper}>
-                <Table sx={{ height: 400, width: '100%' }} aria-label="simple table">
+                <Table sx={{ width: '100%', p: 3 }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>ID</TableCell>
-                      <TableCell align="left">NOME</TableCell>
-                      <TableCell align="left">CNPJ</TableCell>
-                      <TableCell align="left">E-MAIL</TableCell>
-                      <TableCell align="left">AÇÕES</TableCell>
+                      <StyledTableCell align="left">ID</StyledTableCell>
+                      <StyledTableCell align="left">NOME</StyledTableCell>
+                      <StyledTableCell align="left">CNPJ</StyledTableCell>
+                      <StyledTableCell align="left">E-MAIL</StyledTableCell>
+                      <StyledTableCell align="left">AÇÕES</StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

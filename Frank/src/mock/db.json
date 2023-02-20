@@ -1,83 +1,49 @@
 {
   "escola": [
     {
-      "nome": "Frank Alves 3666",
-      "cnpj": "64654646465",
-      "email": "alsdfj@alsdfjlas.com.br",
-      "idEscola": 2
-    },
-    {
-      "cnpj": "20278531000158",
-      "email": "ti@jbtextil.com",
-      "idEscola": 4,
-      "nome": "jacare"
-    },
-    {
-      "cnpj": "afasdf",
-      "email": "afsdf",
-      "idEscola": 5,
-      "nome": "adsfadf"
-    },
-    {
-      "cnpj": "gsdgsdfg",
-      "email": "fdgsdfgfdsg",
-      "idEscola": 8,
-      "nome": "jacare"
-    },
-    {
-      "nome": "tutu",
-      "cnpj": "fhshfghs",
-      "email": "sfhgh",
-      "idEscola": 9
-    },
-    {
-      "nome": "caca",
-      "cnpj": "dfasdfsdf",
-      "email": "asfasdfasdf",
-      "idEscola": 10
-    },
-    {
-      "cnpj": "afadfas",
-      "email": "asdfadsfd",
-      "idEscola": 11,
-      "nome": "diana"
-    },
-    {
-      "cnpj": "afdsfa",
-      "email": "123456",
-      "idEscola": 12,
-      "nome": "colegio integral"
-    },
-    {
       "cnpj": "20278531000158",
       "email": "novaescola@bol.com.br",
-      "idEscola": 13,
-      "nome": "nova escola",
+      "idEscola": 1,
+      "nome": "nova escola 364634635",
       "ativo": true,
       "tipo": "match",
       "federacao": 2,
       "veterinario": true,
-      "qualidade": 4
+      "qualidade": 0.5
+    },
+    {
+      "cnpj": "1321321312",
+      "email": "gsdgsdfgsdfgfdg",
+      "idEscola": 2,
+      "nome": "jacare piriri pim pim",
+      "ativo": true,
+      "tipo": "oficial",
+      "federacao": 1,
+      "veterinario": true,
+      "qualidade": 2.5
     }
   ],
   "usuarios": [
     {
-      "id": 1,
+      "idUsuario": 1,
       "usuario": "Zanatta",
       "senha": "Fleek",
-      "token": "alsdjfaklsdfjakslj"
+      "token": "alsdjfaklsdfjakslj",
+      "avatar": "/1.jpg"
     },
     {
-      "id": 2,
+      "idUsuario": 2,
       "usuario": "Frank",
       "senha": "123",
-      "token": "jkdfjkdfjdkfjdkfjf"
+      "token": "jkdfjkdfjdkfjdkfjf",
+      "avatar": "/2.jpg"
     },
     {
-      "id": 3,
+      "idUsuario": 3,
       "usuario": "Pedro",
       "senha": "awxsvwddhadkfj123#2022a",
-      "token": "pppppopopopooo"
+      "token": "pppppopopopooo",
+      "avatar": "/3.jpg"
     }
   ]
 }

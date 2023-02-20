@@ -29,13 +29,15 @@ export default function MenuListItem({ deslocamento, menu }: PropsMenuItem) {
 
     if (menu.filhos.length === 0) {
         return (
-
+            <>
             <ListItemButton onClick={() => irPara(menu.path)}>
                 <ListItemIcon >
                     <Icon sx={{ textAlign: 'center', marginLeft: deslocamento }}>{menu.icon}</Icon>
                 </ListItemIcon>
                 <ListItemText sx={{ marginLeft: deslocamento - 2 }} primary={menu.descricao} />
             </ListItemButton>
+         
+            </>
         )
 
     } else {
@@ -49,7 +51,6 @@ export default function MenuListItem({ deslocamento, menu }: PropsMenuItem) {
                     <ListItemText sx={{ marginLeft: deslocamento - 2 }} primary={menu.descricao} />
                     {openSubMenu ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
-
                 {menu.filhos.map((menu, index) => (
                     <Collapse in={openSubMenu} timeout="auto" unmountOnExit key={index}>
                         <List component="div" disablePadding>
@@ -57,6 +58,7 @@ export default function MenuListItem({ deslocamento, menu }: PropsMenuItem) {
                         </List>
                     </Collapse>))
                 }
+                <Divider/>
             </>
         )
     }
