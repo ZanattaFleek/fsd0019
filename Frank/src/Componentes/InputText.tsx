@@ -4,6 +4,7 @@ import React from 'react';
 import { FormControl, TextField } from '@mui/material';
 
 interface InputTextInterface {
+  autofoco?: boolean,
   label: string,
   disabled?: boolean,
   type?: string,
@@ -15,13 +16,14 @@ interface InputTextInterface {
 }
 
 export default function InputText(
-  { label, dados, field, setState, disabled = false, type = 'text', placeholder, tipo = 'text' }: InputTextInterface) {
+  { autofoco = false, label, dados, field, setState, disabled = false, type = 'text', placeholder, tipo = 'text' }: InputTextInterface) {
 
 
   return (
     <>
       <FormControl sx={{ width: '100%' }}>
         <TextField
+          autoFocus={autofoco}
           size="small"
           sx={{ my: 0, py: 0, height: 40 }}
           id="outlined-name"

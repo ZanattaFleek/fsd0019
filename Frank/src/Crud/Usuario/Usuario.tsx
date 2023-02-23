@@ -7,6 +7,7 @@ import { Grid, IconButton, Paper, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/Check';
 import SearchIcon from '@mui/icons-material/Search';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -17,7 +18,6 @@ import TableRow from '@mui/material/TableRow';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { styled } from '@mui/material/styles';
-import { LoginStateInterface } from '../../GlobalStates/LoginState';
 import ClsUsuario from './ClsUsuario';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -334,19 +334,19 @@ export default function Escola() {
             }
 
             {localState.acao === 'incluindo' &&
-              <Button variant="contained" onClick={btConfirmarInclusao}>Confirmar Inclusão</Button>
+              <Button sx={{mr:2}} startIcon= {<CheckIcon />} variant="contained" onClick={btConfirmarInclusao}>Confirmar</Button>
             }
 
             {localState.acao === 'editando' &&
-              <Button variant="contained" onClick={btConfirmarEdicao}>Confirmar Edição</Button>
+              <Button sx={{mr:2}} startIcon= {<CheckIcon />} variant="contained" onClick={btConfirmarEdicao}>Confirmar</Button>
             }
 
             {localState.acao === 'excluindo' &&
-              <Button variant="contained" onClick={btConfirmarExclusao}>Confirmar Exclusão</Button>
+              <Button sx={{mr:2}} startIcon= {<CheckIcon />} variant="contained" onClick={btConfirmarExclusao}>Confirmar</Button>
             }
 
             {localState.acao !== 'pesquisando' &&
-              <Button variant="contained" onClick={btCancelar}>Cancelar</Button>
+              <Button startIcon= {<CloseIcon />} variant="contained" onClick={btCancelar}>Cancelar</Button>
             }
 
             {
