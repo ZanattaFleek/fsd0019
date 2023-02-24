@@ -8,7 +8,7 @@ xl, extra-large: 1536px
 
 */
 
-import React from 'react'
+import React, { useState } from 'react'
 
 //import Box from '@mui/material/Box';
 //import Button from '@mui/material/Button';
@@ -18,6 +18,16 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
+import InputText from '../Componentes/InputText'
+import DataTable, { CabecalhoInterface } from '../Componentes/DataTable'
+import Condicional from '../Componentes/Condicional'
+
+enum StateFormInterface {
+  incluindo,
+  excluindo,
+  alterando,
+  pesquisando
+}
 
 const Item = styled(Paper)(({ theme }) => ({
   // backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -43,6 +53,34 @@ export default function Aula() {
 
   });
 
+  const [cadastro, setCadastro] = useState({ id: 3, nome: 'Zanatta' })
+
+  const [stateForm, setStateForm] = useState(StateFormInterface.pesquisando)
+
+  const rsClientes = [
+    { id: 1, nome: 'Frank' },
+    { id: 2, nome: 'Pedro' },
+    { id: 3, nome: 'Zanatta' }
+  ]
+
+  const cabecalho: Array<CabecalhoInterface> = [{
+    alinhamento: 'left',
+    nomeCampo: 'nome',
+    tituloCampo: 'Nome'
+  }]
+
+  const onDelete = (id: number) => {
+    setStateForm(StateFormInterface.excluindo)
+    const registro = rsClientes.find((v) => v.id == id)
+    if (registro) setCadastro(registro)
+  }
+
+  const onEdit = (id: number) => {
+    setStateForm(StateFormInterface.alterando)
+    const registro = rsClientes.find((v) => v.id == id)
+    if (registro) setCadastro(registro)
+  }
+
   return (
     <>
       <ThemeProvider theme={tema}>
@@ -59,7 +97,12 @@ export default function Aula() {
             spacing={1}
           >
             <Grid item xs={12}>
-              <TextField size='small' sx={{ width: '100%' }} label="Nome" />
+              <InputText dados={cadastro}
+                field='nome'
+                label='Nome'
+                setState={setCadastro}
+                type='text'
+              />
             </Grid>
             <Grid item xs={12} md={3}>
               <TextField size='small' sx={{ width: '100%' }} label="Cep" />
@@ -86,6 +129,31 @@ export default function Aula() {
           </Grid>
 
         </Paper>
+
+        <Condicional condicao={stateForm == StateFormInterface.pesquisando}>
+
+          <Paper sx={{
+            p: 2,
+            margin: 'auto',
+            maxWidth: 600,
+            flexGrow: 1,
+            backgroundColor: (theme) =>
+              theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+          }}>
+
+
+
+            <DataTable
+              nomeCampoId='id'
+              dados={rsClientes}
+              cabecalho={cabecalho}
+              onDelete={onDelete}
+              onEdit={onEdit}
+            />
+
+          </Paper>
+
+        </Condicional>
       </ThemeProvider>
     </>
   )
