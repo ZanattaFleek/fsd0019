@@ -63,9 +63,9 @@ export default function Escola() {
       campo: 'ativo',
       cabecalho: 'Ativo',
       alinhamento: 'left',
-      format: ( v: boolean ) => { return v ? 'Sim' : 'Não' }
+      format: (v: boolean) => { return v ? 'Sim' : 'Não' }
     },
-    
+
   ]
 
   /*const [page, setPage] = React.useState(0);
@@ -179,13 +179,12 @@ export default function Escola() {
     setEscola({ ...escola, tipo: (event.target as HTMLInputElement).value });
   };
 
-  const btEditar = (idEscola: number, acao: string) => {
+  const btEditar = (arg: any, acao: string) => {
 
     let clsEscola: ClsEscola = new ClsEscola()
-
     clsEscola.btEditar<EscolaInterface>(
       globalContext,
-      idEscola,
+      arg.idEscola,
       setEscola,
       setLocalState,
       acao
@@ -384,6 +383,7 @@ export default function Escola() {
                     value="ativo"
                     control={
                       <Checkbox
+                        disabled={localState.acao === 'excluindo' ? true : false}
                         checked={escola.ativo}
                         onChange={handleChangeAtivo}
                         inputProps={{ 'aria-label': 'controlled' }}
@@ -404,9 +404,10 @@ export default function Escola() {
                       name="controlled-radio-buttons-group"
                       value={escola.tipo}
                       onChange={handleChangeTipo}
+                      
                     >
-                      <FormControlLabel value="oficial" control={<Radio />} label="Oficial" />
-                      <FormControlLabel value="match" control={<Radio />} label="Match" />
+                      <FormControlLabel value="oficial" control={<Radio />} label="Oficial" disabled={localState.acao === 'excluindo' ? true : false} />
+                      <FormControlLabel value="match" control={<Radio />} label="Match" disabled={localState.acao === 'excluindo' ? true : false} />
                     </RadioGroup>
                   </FormControl>
                 </Grid>
@@ -422,6 +423,7 @@ export default function Escola() {
                         value={escola.federacao}
                         label="Federação"
                         onChange={handleChangeFederacao}
+                        disabled={localState.acao === 'excluindo' ? true : false}
                       >
                         {federacoes.map((federacao, i) => (
                           <MenuItem key={i} value={i}>{federacao}</MenuItem>
@@ -442,6 +444,7 @@ export default function Escola() {
                     }}
                   >
                     <Rating
+                      disabled={localState.acao === 'excluindo' ? true : false}
                       name="hover-feedback"
                       value={escola.qualidade}
                       precision={0.5}
@@ -463,6 +466,7 @@ export default function Escola() {
 
                   <FormControlLabel control={
                     <Switch
+                      disabled={localState.acao === 'excluindo' ? true : false}
                       checked={escola.veterinario}
                       onChange={handleChangeVeterinario}
                     />}
@@ -491,12 +495,12 @@ export default function Escola() {
               localState.acao === 'pesquisando' &&
               <>
                 <Grid item xs={12} sx={{ mt: 3 }}>
-                <CreateTable 
-                  dados={rsPesquisa} 
-                  cabecalho={Cabecalho} 
-                  onEditar={() => btEditar(1, 'editando')} 
-                  onExcluir={() => btEditar(1, 'excluindo')} />
-              </Grid>
+                  <CreateTable
+                    dados={rsPesquisa}
+                    cabecalho={Cabecalho}
+                    onEditar={(arg) => btEditar(arg, 'editando')}
+                    onExcluir={(arg) => btEditar(arg, 'excluindo')} />
+                </Grid>
                 {/*<TableContainer component={Paper}>
                   <Table sx={{ minWidth: 650 }} size="small">
                     <TableHead>

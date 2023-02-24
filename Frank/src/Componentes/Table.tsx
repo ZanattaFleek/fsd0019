@@ -13,7 +13,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     padding: 10,
     backgroundColor: theme.palette.primary.main,
     fontSize: 15,
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -41,7 +42,7 @@ export interface DataTableCabecalhoInterface {
 
 
 export interface DataTableInterface {
-  dados: Array<{ [key: string]: number | string }> | Array<Object>
+  dados: Array<{ [key: string]: any }>
   cabecalho: Array<DataTableCabecalhoInterface>
   onEditar?: (arg?: any) => void
   onExcluir?: (arg?: any) => void
@@ -68,14 +69,15 @@ export default function CreateTable({
 
   return (
     <>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size='small'>
+      <TableContainer component={Paper} sx={{ maxHeight: 500 }}>
+        <Table  size='small' stickyHeader>
           <TableHead>
             <StyledTableRow>
               {cabecalho.map((coluna, indice) => (
                 <StyledTableCell
                   key={indice}
                   style={{ minWidth: coluna.largura }}
+                  
                 >
 
                   {coluna.cabecalho}
@@ -113,6 +115,7 @@ export default function CreateTable({
                         </StyledTableCell>
                       )
                     })
+                      // <IconButton onClick={() => onExcluir( row && row['id'] ? (row['id'] as any) : 0, 'excluindo')} sx={{ mx: 0, px: 0 }}>
                     }
                     <Condicional condicao={typeof onEditar == 'function' || typeof onExcluir == 'function'}>
                       <StyledTableCell>

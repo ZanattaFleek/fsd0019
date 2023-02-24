@@ -7,6 +7,7 @@ import Usuario from '../Crud/Usuario/Usuario';
 import ErroAplicacao from '../Layout/ErroAplicacao';
 import LayOut from '../Layout/LayOut';
 import Login from '../Login/Login';
+import Teste from '../Teste_apagar/Teste';
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       errorElement: <ErroAplicacao />
     }
   ]
+  },
+  {
+    path: "teste",
+    element: <Teste />
   },
   {
     path: "*",
