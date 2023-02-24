@@ -1,10 +1,7 @@
-import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 
 import { Outlet } from 'react-router-dom';
 import Mensagem from '../Componentes/Mensagem';
-import { theme } from '../Config/Theme';
 
 import { ContextoGlobal } from '../Contextos/ContextoGlobal';
 import useLayoutState from '../GlobalStates/LayoutState';
@@ -12,11 +9,10 @@ import useLoginState from '../GlobalStates/LoginState';
 import useMensagemState from '../GlobalStates/MensagemState';
 
 import Login from '../Login/Login';
-import Appbar from './Appbar';
 import Footer from './Footer';
+import Header from './Header';
 
-import { Toolbar } from '@mui/material';
-
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 export default function LayOut() {
 
@@ -24,10 +20,22 @@ export default function LayOut() {
   const { layoutState, setLayoutState } = useLayoutState()
   const { mensagemState, setMensagemState } = useMensagemState()
 
+  const tema = createTheme({
+    palette: {
+      primary: {
+        main: '#ff00aa',
+      },
+      secondary: {
+        main: '#aa00ff',
+      },
+    },
+
+  });
+
+
   return (
     <>
-      <CssBaseline />
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={tema}>
         <ContextoGlobal.Provider value={{
           loginState: loginState,
           setLoginState: setLoginState,
@@ -40,12 +48,9 @@ export default function LayOut() {
             {loginState.logado ?
               <>
                 <Mensagem />
-                <Appbar />
+                <Header />
                 <Outlet />
-                <Toolbar />
                 <Footer />
-
-
               </> :
               <>
                 <Login />

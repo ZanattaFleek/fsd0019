@@ -1,7 +1,35 @@
 import { createTheme } from "@mui/material";
 import { orange, red } from "@mui/material/colors";
+import {ptBR} from '@mui/material/locale';
 
 export const theme = createTheme({
+  
+  components: {
+    MuiIconButton:{
+      defaultProps: {
+        color: 'primary',
+        style: {
+          height: '35px', 
+          width: '35px'
+        }
+      },
+    },
+  },
+  menu:{
+    corIcone: '#0E5E53',
+    tamanhoIcone:40
+  },
+  
+  mensagens:{
+    corWarning: 'orange',
+    corError: 'red',
+    corInfo: 'blue',
+    corSucess: 'green',
+    corFundo: 'black',
+    corTitulo: 'black',
+    corMensagem: 'gray',
+    tamanhoIcone: 50
+  },
   palette: {
     primary: {
       main: orange[200],
@@ -9,23 +37,26 @@ export const theme = createTheme({
     secondary:{
       main: red[500],
     },
-    neutral: {
-      main: '#64748B',
-      contrastText: '#fff',
-    },
   },
-})
+}, ptBR);
 
 declare module '@mui/material/styles' {
 
+  interface ThemeOptions {
 
-  interface Palette {
-    neutral: Palette['primary'];
+    menu:{
+      corIcone: string
+      tamanhoIcone: number
+    },
+    mensagens:{
+      corWarning: string,
+      corError: string,
+      corInfo: string,
+      corSucess: string,
+      corFundo: string,
+      corTitulo: string,
+      corMensagem: string,
+      tamanhoIcone: number
+    }
   }
-
-  interface PaletteOptions {
-    neutral: PaletteOptions['primary'];
-  }
-
-
 }

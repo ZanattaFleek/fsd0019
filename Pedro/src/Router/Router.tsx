@@ -1,12 +1,11 @@
 import React from 'react'
 
 import { createBrowserRouter } from 'react-router-dom';
-import Cao from '../Crud/Cao/Cao';
 import Escola from '../Crud/Escola/Escola';
-import Usuario from '../Crud/Usuario/Usuario';
 import ErroAplicacao from '../Layout/ErroAplicacao';
 import LayOut from '../Layout/LayOut';
 import Login from '../Login/Login';
+import Aula from '../testes_apagar/Aula';
 
 export const router = createBrowserRouter([
   {
@@ -17,23 +16,15 @@ export const router = createBrowserRouter([
       path: "escola",
       element: <Escola />,
       errorElement: <ErroAplicacao />
-    },
-    {
-      path: "cao",
-      element: <Cao />,
-      errorElement: <ErroAplicacao />
-    }
-    ,
-    {
-      path: "usuarios",
-      element: <Usuario />,
-      errorElement: <ErroAplicacao />
-    }
-  ]
+    }]
   },
   {
     path: "*",
     element: <Login />
+  },
+  {
+    path: "/Aula",
+    element: <Aula />
   }
 
   /*

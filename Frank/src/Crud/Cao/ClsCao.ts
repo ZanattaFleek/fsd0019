@@ -3,7 +3,7 @@ import { ContextoGlobalInterface } from "../../Contextos/ContextoGlobal"
 
 const TEMPO_REFRESH_TEMPORARIO = 500
 
-export default class ClsEscola {
+export default class ClsCao {
 
   public btEditar<T>(
     globalContext: ContextoGlobalInterface,
@@ -29,14 +29,13 @@ export default class ClsEscola {
           globalContext.setMensagemState({ exibir: false, mensagem: '', tipo: 'aviso' })
 
           // Envio somente os dados para o próximo Then....
-          //console.log(rs.json())
           return rs.json()
 
         } else {
           globalContext.setMensagemState({ exibir: true, mensagem: 'Erro ao Pesquisar Escola!!!', tipo: 'erro' })
         }
       }).then(rsEscola => {
-        
+
         setEscola(rsEscola)
         setLocalState({ acao: acao })
 

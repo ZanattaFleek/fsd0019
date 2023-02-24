@@ -1,0 +1,36 @@
+{
+  "escola": [
+    {
+      "cnpj": "20212121231331",
+      "email": "fleek@fleekcursos.com.br",
+      "idEscola": 3,
+      "nome": "Fleek Cursos 2222"
+    },
+    {
+      "nome": "Eduardo Faria",
+      "cnpj": "6646566546464",
+      "email": "eduardo@eduardo.com.br",
+      "idEscola": 5
+    }
+  ],
+  "usuarios": [
+    {
+      "id": 1,
+      "usuario": "Zanatta",
+      "senha": "Fleek",
+      "token": "alsdjfaklsdfjakslj"
+    },
+    {
+      "id": 2,
+      "usuario": "Frank",
+      "senha": "Cursos",
+      "token": "jkdfjkdfjdkfjdkfjf"
+    },
+    {
+      "id": 3,
+      "usuario": "Pedro",
+      "senha": "awxsvwddhadkfj123#2022a",
+      "token": "pppppopopopooo"
+    }
+  ]
+}

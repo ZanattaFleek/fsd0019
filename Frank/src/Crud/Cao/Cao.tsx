@@ -1,11 +1,12 @@
 import { useContext, useState } from 'react';
 import { ContextoGlobal, ContextoGlobalInterface } from '../../Contextos/ContextoGlobal';
 import { EscolaInterface } from '../../Interfaces/EscolaInterfaces';
+//import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { URL_SERVIDOR } from '../../Config/Setup';
 import InputText from '../../Componentes/InputText';
-import ClsEscola from './ClsEscola';
+import ClsCao from './ClsCao';
 import Button from '@mui/material/Button';
-import { Box, Checkbox, FormControl, FormControlLabel, FormLabel, Grid, IconButton, InputLabel, MenuItem, Paper, Radio, RadioGroup, Rating, Select, SelectChangeEvent, Switch, TablePagination, Typography } from '@mui/material';
+import { Box, Checkbox, FormControl, FormControlLabel, FormLabel, Grid, IconButton, InputLabel, MenuItem, Paper, Radio, RadioGroup, Rating, Select, SelectChangeEvent, Switch, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
@@ -14,26 +15,15 @@ import React from 'react';
 import StarIcon from '@mui/icons-material/Star';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { styled } from '@mui/material/styles';
-import CheckIcon from '@mui/icons-material/Check';
-import CreateTable, { DataTableCabecalhoInterface } from '../../Componentes/Table';
 
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
+
 
 const TEMPO_REFRESH_TEMPORARIO = 500
 
@@ -41,44 +31,7 @@ interface PesquisaInterface {
   nome: string
 }
 
-export default function Escola() {
-
-  const Cabecalho: Array<DataTableCabecalhoInterface> = [
-    {
-      campo: 'idEscola',
-      cabecalho: 'ID',
-      alinhamento: 'left'
-    },
-    {
-      campo: 'nome',
-      cabecalho: 'Escola',
-      alinhamento: 'left'
-    },
-    {
-      campo: 'cnpj',
-      cabecalho: 'CNPJ',
-      alinhamento: 'left'
-    },
-    {
-      campo: 'ativo',
-      cabecalho: 'Ativo',
-      alinhamento: 'left',
-      format: ( v: boolean ) => { return v ? 'Sim' : 'Não' }
-    },
-    
-  ]
-
-  /*const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };*/
+export default function Cao() {
 
   const [rsPesquisa, setRsPesquisa] = useState<Array<EscolaInterface>>([])
 
@@ -86,7 +39,7 @@ export default function Escola() {
 
   const [localState, setLocalState] = useState({ acao: 'pesquisando' })
 
-  const ZeraDados: EscolaInterface = {
+  const [escola, setEscola] = useState<EscolaInterface>({
     cnpj: '',
     email: '',
     idEscola: 0,
@@ -95,21 +48,18 @@ export default function Escola() {
     tipo: '',
     federacao: '',
     veterinario: false,
-    qualidade: 2
-  }
-  const [escola, setEscola] = useState<EscolaInterface>(ZeraDados)
+    qualidade:2
+  })
 
   const [pesquisa, setPesquisa] = useState<PesquisaInterface>({ nome: '' })
 
-  /*const printTable = () =>
-
-    <>
-      {rsPesquisa
-        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-        .map((row) => (
+  const printTable = () =>
+    
+      <TableBody>
+        {rsPesquisa.map((row) => (
           <TableRow
             key={row.idEscola}
-          //sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
             <TableCell component="th" scope="row">
               {row.idEscola}
@@ -122,20 +72,20 @@ export default function Escola() {
                 type="button"
                 sx={{ p: '10px' }}
                 aria-label="delete"
-                onClick={() => btEditar(row.idEscola, 'excluindo')}>
+                onClick={() => btEditar(escola.idEscola, 'excluindo')}>
                 <DeleteOutlineOutlinedIcon />
               </IconButton>
               <IconButton
                 type="button"
                 sx={{ p: '10px' }}
                 aria-label="editar"
-                onClick={() => btEditar(row.idEscola, 'editando')}>
+                onClick={() => btEditar(escola.idEscola, 'editando')}>
                 <EditOutlinedIcon />
               </IconButton>
             </TableCell>
           </TableRow>
         ))}
-    </>*/
+      </TableBody>
 
   const federacoes = [
     'Federação Brasileira',
@@ -163,27 +113,26 @@ export default function Escola() {
 
   const [hover, setHover] = React.useState(-1);
 
-  const handleChangeFederacao = (event: SelectChangeEvent) => {
-    setEscola({ ...escola, federacao: event.target.value as string });
+    const handleChangeFederacao = (event: SelectChangeEvent) => {
+    setEscola({...escola, federacao:event.target.value as string});
   };
-
+  
   const handleChangeVeterinario = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEscola({ ...escola, veterinario: event.target.checked });
+    setEscola({...escola, veterinario: event.target.checked});
   };
 
   const handleChangeAtivo = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEscola({ ...escola, ativo: event.target.checked });
+    setEscola({...escola, ativo:event.target.checked});
   };
 
   const handleChangeTipo = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEscola({ ...escola, tipo: (event.target as HTMLInputElement).value });
+    setEscola({...escola, tipo:(event.target as HTMLInputElement).value});
   };
-
   const btEditar = (idEscola: number, acao: string) => {
 
-    let clsEscola: ClsEscola = new ClsEscola()
+    let clsCao: ClsCao = new ClsCao()
 
-    clsEscola.btEditar<EscolaInterface>(
+    clsCao.btEditar<EscolaInterface>(
       globalContext,
       idEscola,
       setEscola,
@@ -218,7 +167,17 @@ export default function Escola() {
 
           globalContext.setMensagemState({ exibir: true, mensagem: 'Escola Excluída com Sucesso', tipo: 'aviso' })
 
-          setEscola(ZeraDados)
+          setEscola({ 
+            cnpj: '',
+            email: '',
+            idEscola: 0,
+            nome: '',
+            ativo: false,
+            tipo: '',
+            federacao: '',
+            veterinario: false,
+            qualidade:2
+           })
 
           setLocalState({ acao: 'pesquisando' })
 
@@ -254,8 +213,20 @@ export default function Escola() {
       }).then(rs => {
         if (rs.ok) {
 
-          setEscola(ZeraDados)
+          setEscola({
+            cnpj: '',
+            email: '',
+            idEscola: 0,
+            nome: '',
+            ativo: false,
+            tipo: '',
+            federacao: '',
+            veterinario: false,
+            qualidade:2
+          })
+
           setLocalState({ acao: 'pesquisando' })
+
           btPesquisar()
 
           globalContext.setMensagemState({ exibir: true, mensagem: 'Dados Alterados com Sucesso', tipo: 'aviso' })
@@ -281,9 +252,19 @@ export default function Escola() {
         method: 'POST'
       }).then(rs => {
         if (rs.status === 201) {
-          setEscola(ZeraDados)
+          setEscola({ 
+            cnpj: '',
+            email: '',
+            idEscola: 0,
+            nome: '',
+            ativo: false,
+            tipo: '',
+            federacao: '',
+            veterinario: false,
+            qualidade:2
+           })
           globalContext.setMensagemState({ exibir: true, mensagem: 'Escola Cadastrada com Sucesso', tipo: 'aviso' })
-
+          //btPesquisar()
         } else {
           globalContext.setMensagemState({ exibir: true, mensagem: 'Erro ao Incluir Escola!!!', tipo: 'erro' })
         }
@@ -321,6 +302,7 @@ export default function Escola() {
         }
       }).then(rsEscolas => {
 
+        console.log(JSON.stringify(rsEscolas))
         setRsPesquisa(rsEscolas)
 
       }).catch(() => {
@@ -345,9 +327,9 @@ export default function Escola() {
 
             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
               <Typography component="h5" variant="h5" align="left">
-                Cadastro de Escola
+                Cadastro de Produtos
                 <Typography variant="body2" gutterBottom>
-                  Inclusão de uma nova escola
+                  Cadastro de todos os produtos sfdgsfdgsg sfgsdfg sdfgsdg sdgdfg
                 </Typography>
               </Typography>
 
@@ -359,11 +341,11 @@ export default function Escola() {
             {localState.acao === 'pesquisando' &&
 
               <>
-                <Grid item xs={7} sm={10} sx={{ mb: 5 }}>
-                  <InputText label='' placeholder='Pesquisar' tipo="text" dados={pesquisa} field="nome" setState={setPesquisa} />
+                <Grid item xs={12} sm={10} sx={{ mb: 3 }}>
+                  <InputText label="Pesquisa" tipo="text" dados={pesquisa} field="nome" setState={setPesquisa} />
 
                 </Grid>
-                <Grid item xs={5} sm={2} sx={{ textAlign: { xs: 'right', sm: 'center' }, mb: 5 }}>
+                <Grid item xs={12} sm={2} sx={{ textAlign: { xs: 'right', sm: 'center' } }}>
                   <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={() => btPesquisar()}>
                     <SearchIcon />
                   </IconButton>
@@ -377,7 +359,7 @@ export default function Escola() {
             {localState.acao !== 'pesquisando' &&
               <>
                 <Grid item xs={12} sm={10} mt={3}>
-                  <InputText autofoco label="Nome" tipo="text" dados={escola} field="nome" setState={setEscola} disabled={localState.acao === 'excluindo' ? true : false} />
+                  <InputText label="Nome" tipo="text" dados={escola} field="nome" setState={setEscola} disabled={localState.acao === 'excluindo' ? true : false} />
                 </Grid>
                 <Grid item xs={12} sm={2} mt={3} sx={{ pl: { sm: 2 } }}>
                   <FormControlLabel
@@ -392,11 +374,11 @@ export default function Escola() {
                     labelPlacement="top"
                   />
                 </Grid>
-                <Grid item xs={12} sm={8} mt={1}>
+                <Grid item xs={12} sm={8} mt={3}>
                   <InputText label="CNPJ" tipo="text" dados={escola} field="cnpj" setState={setEscola} disabled={localState.acao === 'excluindo' ? true : false} />
                 </Grid>
 
-                <Grid item xs={12} sm={2} mt={2} ml={1} sx={{ pl: { sm: 2 } }} borderRadius={3} border={1} borderColor={'lightgray'}>
+                <Grid item xs={12} sm={2} mt={3} ml={10} sx={{ pl: { sm: 2 } }} borderRadius={3} border={1} borderColor={'lightgray'}>
                   <FormControl>
                     <FormLabel id="demo-controlled-radio-buttons-group">Tipo</FormLabel>
                     <RadioGroup
@@ -413,12 +395,13 @@ export default function Escola() {
                 <Grid item xs={12} sm={8} mt={3} mr={1}>
                   <InputText label="e-mail" tipo="text" dados={escola} field="email" setState={setEscola} disabled={localState.acao === 'excluindo' ? true : false} />
                 </Grid>
-                <Grid item xs={12} sm={3} mt={3}>
+                <Grid item xs={12} sm={3} mt={5}>
                   <Box>
                     <FormControl fullWidth>
-                      <InputLabel sx={{ mt: -1 }}>Federação</InputLabel>
+                      <InputLabel id="demo-simple-select-label">Federação</InputLabel>
                       <Select
-                        size='small'
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
                         value={escola.federacao}
                         label="Federação"
                         onChange={handleChangeFederacao}
@@ -432,7 +415,7 @@ export default function Escola() {
                     </FormControl>
                   </Box>
                 </Grid>
-                <Grid item xs={12} sm={8} mt={3} >
+                <Grid item xs={12} sm={8} mt={3} mb={3}>
 
                   <Box
                     sx={{
@@ -447,7 +430,7 @@ export default function Escola() {
                       precision={0.5}
                       getLabelText={getLabelText}
                       onChange={(event, newValue) => {
-                        setEscola({ ...escola, qualidade: newValue });
+                        setEscola({...escola, qualidade: newValue});
                       }}
                       onChangeActive={(event, newHover) => {
                         setHover(newHover);
@@ -459,7 +442,7 @@ export default function Escola() {
                     )}
                   </Box>
                 </Grid>
-                <Grid item xs={12} sm={2} mt={3} mb={3}>
+                <Grid item xs={12} sm={2} mt={3} ml={5} mb={3}>
 
                   <FormControlLabel control={
                     <Switch
@@ -472,60 +455,41 @@ export default function Escola() {
             }
 
             {localState.acao === 'incluindo' &&
-              <Button sx={{ mr: 2 }} startIcon={<CheckIcon />} variant="contained" onClick={btConfirmarInclusao}>Confirmar</Button>
+              <Button variant="contained" onClick={btConfirmarInclusao}>Confirmar Inclusão</Button>
             }
 
             {localState.acao === 'editando' &&
-              <Button sx={{ mr: 2 }} startIcon={<CheckIcon />} variant="contained" onClick={btConfirmarEdicao}>Confirmar</Button>
+              <Button variant="contained" onClick={btConfirmarEdicao}>Confirmar Edição</Button>
             }
 
             {localState.acao === 'excluindo' &&
-              <Button sx={{ mr: 2 }} startIcon={<CheckIcon />} variant="contained" onClick={btConfirmarExclusao}>Confirmar</Button>
+              <Button variant="contained" onClick={btConfirmarExclusao}>Confirmar Exclusão</Button>
             }
 
             {localState.acao !== 'pesquisando' &&
-              <Button startIcon={<CloseIcon />} variant="contained" onClick={btCancelar}>Cancelar</Button>
+              <Button variant="contained" onClick={btCancelar}>Cancelar</Button>
             }
 
             {
               localState.acao === 'pesquisando' &&
-              <>
-                <Grid item xs={12} sx={{ mt: 3 }}>
-                <CreateTable 
-                  dados={rsPesquisa} 
-                  cabecalho={Cabecalho} 
-                  onEditar={() => btEditar(1, 'editando')} 
-                  onExcluir={() => btEditar(1, 'excluindo')} />
-              </Grid>
-                {/*<TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} size="small">
-                    <TableHead>
-                      <TableRow>
-                        <StyledTableCell align="left">ID</StyledTableCell>
-                        <StyledTableCell align="left">NOME</StyledTableCell>
-                        <StyledTableCell align="left">CNPJ</StyledTableCell>
-                        <StyledTableCell align="left">E-MAIL</StyledTableCell>
-                        <StyledTableCell align="left">AÇÕES</StyledTableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {
-                        printTable()
-                      }
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                <TablePagination
-                  labelRowsPerPage="Qtd: "
-                  rowsPerPageOptions={[10, 25, 100]}
-                  component="div"
-                  count={rsPesquisa.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                    />*/}
-              </>
+              <TableContainer component={Paper}>
+                <Table sx={{ height: 400, width: '100%' }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>ID</TableCell>
+                      <TableCell align="left">NOME</TableCell>
+                      <TableCell align="left">CNPJ</TableCell>
+                      <TableCell align="left">E-MAIL</TableCell>
+                      <TableCell align="left">AÇÕES</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {
+                      printTable()
+                    }
+                  </TableBody>
+                </Table>
+              </TableContainer>
             }
           </Grid>
         </Paper >
