@@ -33,7 +33,7 @@ export default function Escola() {
 
 
   const [temErro, setTemErro] = React.useState(false);
-  
+
   const [statusForm, setStatusForm] = useState<StatusForm>(StatusForm.Pesquisando)
 
 
@@ -129,6 +129,17 @@ export default function Escola() {
   const handleChangeTipo = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEscola({ ...escola, tipo: (event.target as HTMLInputElement).value });
   };
+  const validarDados = (): boolean => {
+    let retorno: boolean = false
+
+    if (escola.nome &&
+      escola.cnpj &&
+      escola.email) {
+      retorno = true
+    }
+
+    return retorno
+  }
 
   const btEditar = (arg: any, acao: StatusForm) => {
 
@@ -215,29 +226,33 @@ export default function Escola() {
 
   const btConfirmarInclusao = () => {
 
-    globalContext.setMensagemState({ exibir: true, mensagem: 'Incluindo Escola', tipo: 'processando' })
+    if (validarDados()) {
+      globalContext.setMensagemState({ exibir: true, mensagem: 'Incluindo Escola', tipo: 'processando' })
 
-    setTimeout(() => {
-      fetch(URL_SERVIDOR.concat('/escola'), {
-        body: JSON.stringify(escola),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST'
-      }).then(rs => {
-        if (rs.status === 201) {
+      setTimeout(() => {
+        fetch(URL_SERVIDOR.concat('/escola'), {
+          body: JSON.stringify(escola),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST'
+        }).then(rs => {
+          if (rs.status === 201) {
 
-          setEscola(ZeraDados)
-          globalContext.setMensagemState({ exibir: true, mensagem: 'Escola Cadastrada com Sucesso', tipo: 'aviso' })
+            setEscola(ZeraDados)
+            globalContext.setMensagemState({ exibir: true, mensagem: 'Escola Cadastrada com Sucesso', tipo: 'aviso' })
 
-        } else {
-          globalContext.setMensagemState({ exibir: true, mensagem: 'Erro ao Incluir Escola!!!', tipo: 'erro' })
-        }
-      }).catch(() => {
-        globalContext.setMensagemState({ exibir: true, mensagem: 'Erro no Servidor. Não foi possível incluir Escola!!!', tipo: 'erro' })
-      })
-    }, TEMPO_REFRESH_TEMPORARIO)
+          } else {
+            globalContext.setMensagemState({ exibir: true, mensagem: 'Erro ao Incluir Escola!!!', tipo: 'erro' })
+          }
+        }).catch(() => {
+          globalContext.setMensagemState({ exibir: true, mensagem: 'Erro no Servidor. Não foi possível incluir Escola!!!', tipo: 'erro' })
+        })
+      }, TEMPO_REFRESH_TEMPORARIO)
 
+    } else {
+      globalContext.setMensagemState({ exibir: true, mensagem: 'Alguns dados são obrigatórios!! Preencha dos campos.', tipo: 'aviso' })
+    }
   }
 
   const btPesquisar = () => {
@@ -314,7 +329,7 @@ export default function Escola() {
                   iconeEnd='search'
                   onClickIconeEnd={() => btPesquisar()}
                   teclaPress={[{ key: 'Enter', onKey: btPesquisar }]}
-                  
+
                 />
 
               </Grid>
@@ -330,14 +345,14 @@ export default function Escola() {
 
             <Condicional condicao={statusForm !== StatusForm.Pesquisando}>
               <Grid item xs={12} sm={10} mt={3}>
-                <InputText 
-                  autofoco 
-                  label="Nome" 
-                  tipo="txt" 
-                  dados={escola} 
-                  field="nome" 
-                  setState={setEscola} 
-                  disabled={statusForm === StatusForm.Excluindo} 
+                <InputText
+                  autofoco
+                  label="Nome"
+                  tipo="txt"
+                  dados={escola}
+                  field="nome"
+                  setState={setEscola}
+                  disabled={statusForm === StatusForm.Excluindo}
                 />
               </Grid>
               <Grid item xs={12} sm={2} mt={3} sx={{ pl: { sm: 2 } }}>

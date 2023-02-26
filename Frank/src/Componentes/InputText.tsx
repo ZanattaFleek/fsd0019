@@ -4,6 +4,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import ClsValidaCampo from '../Utils/ClsValidaCampos';
 import Condicional from '../Layout/Condicional';
 
+
 interface TeclaPressInterface {
   key: string
   onKey: () => void
@@ -23,11 +24,10 @@ interface InputTextInterface {
   iconeStart?: string,
   iconeEnd?: string,
   onClickIconeStart?: () => void,
-  onClickIconeEnd?: () => void,
-  validado?:boolean
+  onClickIconeEnd?: () => void
 }
 
-export default function InputText(
+export default function InputText(this: any,
   { autofoco = false,
     label, dados,
     field,
@@ -40,8 +40,8 @@ export default function InputText(
     iconeStart = '',
     onClickIconeStart = () => { },
     iconeEnd = '',
-    onClickIconeEnd = () => { },
-    validado = false
+    onClickIconeEnd = () => { }
+
 
   }: InputTextInterface) {
 
@@ -68,7 +68,6 @@ export default function InputText(
   const validaCampo: ClsValidaCampo = new ClsValidaCampo()
 
   const [validacao, setValidacao] = useState('')
-  const [validadoState, setValidadoState] = useState(false)
 
   const testaCEP = (_CEP: string) => {
 
@@ -76,11 +75,9 @@ export default function InputText(
       if (temCEP) {
 
         setValidacao('')
-        setValidadoState(true)
 
       } else {
         setValidacao('CEP Inválido!')
-        setValidadoState(false)
       }
     })
   }
@@ -91,31 +88,22 @@ export default function InputText(
 
     if (tipo === 'txt' && validaCampo.campoVazio(vr)) {
       setValidacao("Campo não pode ser vázio!")
-      setValidadoState(false)
     } else if (tipo === 'cpf' && !validaCampo.eCPF(vr)) {
       setValidacao("CPF Inválido!")
-      setValidadoState(false)
     } else if (tipo === 'cnpj' && !validaCampo.eCNPJ(vr)) {
       setValidacao("CNPJ Inválido!")
-      setValidadoState(false)
     } else if (tipo === 'uf' && !validaCampo.eUF(vr)) {
       setValidacao("UF Inválido!")
-      setValidadoState(false)
     } else if (tipo === 'sexo' && !validaCampo.eSEXO(vr)) {
       setValidacao('SEXO inválido!')
-      setValidadoState(false)
     } else if (tipo === 'tel' && !validaCampo.eTEL(vr)) {
       setValidacao('Formato correto do tel é (xx) xxxxx-xxxx')
-      setValidadoState(false)
     } else if (tipo === 'cep') {
       testaCEP(vr)
-      setValidadoState(false)
     } else if (tipo === 'email' && !validaCampo.eEMAIL(vr)) {
       setValidacao('E-mail com formato inválido!')
-      setValidadoState(false)
     } else {
       setValidacao("")
-      setValidadoState(true)
     }
   }
 
@@ -154,7 +142,8 @@ export default function InputText(
           endAdornment={exibirIcone('end', iconeEnd, onClickIconeEnd)}
           startAdornment={exibirIcone('start', iconeStart, onClickIconeStart)}
           onBlur={validarNaoVazio}
-          error={validadoState}
+
+
 
         />
 

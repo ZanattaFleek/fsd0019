@@ -384,6 +384,39 @@
       "federacao": "",
       "veterinario": false,
       "qualidade": 2
+    },
+    {
+      "cnpj": "20278531000158",
+      "email": "ty@bol.com",
+      "idEscola": 39,
+      "nome": "Frank",
+      "ativo": false,
+      "tipo": "",
+      "federacao": "",
+      "veterinario": false,
+      "qualidade": 2
+    },
+    {
+      "cnpj": "",
+      "email": "",
+      "idEscola": 40,
+      "nome": "",
+      "ativo": false,
+      "tipo": "",
+      "federacao": "",
+      "veterinario": false,
+      "qualidade": 2
+    },
+    {
+      "cnpj": "20278531000158",
+      "email": "tutu@bol.com",
+      "idEscola": 41,
+      "nome": "teste obrigatoriedade",
+      "ativo": false,
+      "tipo": "",
+      "federacao": "",
+      "veterinario": false,
+      "qualidade": 2
     }
   ],
   "usuarios": [
