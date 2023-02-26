@@ -1,5 +1,5 @@
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { Box, Collapse, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import { Collapse, Divider, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import Icon from '@mui/material/Icon';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

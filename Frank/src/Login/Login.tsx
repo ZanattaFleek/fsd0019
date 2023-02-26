@@ -1,7 +1,7 @@
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Box, Button, Container, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import InputText from '../Componentes/InputText';
+
 
 import { URL_SERVIDOR } from '../Config/Setup';
 import { theme } from '../Config/Theme';
@@ -14,13 +14,14 @@ interface LoginInterface {
 }
 
 export default function Login() {
+
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
+  //const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //  event.preventDefault();
+  //};
 
   const [login, setLogin] = useState<LoginInterface>({
     usuario: '', senha: ''
@@ -75,33 +76,20 @@ export default function Login() {
                   field="usuario"
                   label="Login"
                   setState={setLogin}
-                  
+
                 />
               </Grid>
               <Grid item xs={12} md={12} m={2}>
+                <InputText
+                  dados={login}
+                  field="senha"
+                  label="Senha"
+                  setState={setLogin}
+                  type={showPassword ? 'text' : 'password'}
+                  iconeEnd={showPassword ? "visibilityoff"  : "visibility"}
+                  onClickIconeEnd={handleClickShowPassword}
+                />
 
-                <FormControl sx={{ width: '100%' }} variant="outlined">
-                  <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
-                  <OutlinedInput
-                    size='small'
-                    onChange={(e) => setLogin({ ...login, senha: e.target.value })}
-                    id="outlined-adornment-password"
-                    type={showPassword ? 'text' : 'password'}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    label="Senha"
-                  />
-                </FormControl>
 
               </Grid>
               <Grid item xs={12} md={12} ml={34} >

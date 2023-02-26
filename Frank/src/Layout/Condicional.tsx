@@ -1,22 +1,15 @@
 import React from 'react'
 
-interface PropsInterface {
+interface CondicionalInterface {
   children: any
   condicao: boolean
 }
 
-export default function Condicional ( { children, condicao }: PropsInterface ) {
+export default function Condicional({ children, condicao }: CondicionalInterface) {
 
-  if ( condicao ) {
-    return (
-      <>
-        {children}
-      </>
-    )
+  if (condicao) {
+    return (<>{children}</>)
   } else {
-    return (
-      <></>
-    )
+    return (<></>)
   }
-
 }

@@ -5,35 +5,16 @@ import { URL_SERVIDOR } from '../../Config/Setup';
 import InputText from '../../Componentes/InputText';
 import ClsEscola from './ClsEscola';
 import Button from '@mui/material/Button';
-import { Box, Checkbox, FormControl, FormControlLabel, FormLabel, Grid, IconButton, InputLabel, MenuItem, Paper, Radio, RadioGroup, Rating, Select, SelectChangeEvent, Switch, TablePagination, Typography } from '@mui/material';
+import { Box, Checkbox, FormControl, FormControlLabel, FormLabel, Grid, IconButton, InputLabel, MenuItem, Paper, Radio, RadioGroup, Rating, Select, SelectChangeEvent, Switch, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
-import SearchIcon from '@mui/icons-material/Search';
 import React from 'react';
 import StarIcon from '@mui/icons-material/Star';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { styled } from '@mui/material/styles';
 import CheckIcon from '@mui/icons-material/Check';
 import CreateTable, { DataTableCabecalhoInterface } from '../../Componentes/Table';
+import Condicional from '../../Layout/Condicional';
 
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
 
 const TEMPO_REFRESH_TEMPORARIO = 500
 
@@ -41,7 +22,27 @@ interface PesquisaInterface {
   nome: string
 }
 
+export enum StatusForm {
+  Incluindo,
+  Excluindo,
+  Pesquisando,
+  Editando
+}
+
 export default function Escola() {
+
+
+  const [temErro, setTemErro] = React.useState(false);
+  
+  const [statusForm, setStatusForm] = useState<StatusForm>(StatusForm.Pesquisando)
+
+
+  const TituloForm = {
+    [StatusForm.Incluindo]: 'Inclusão de uma nova Escola.',
+    [StatusForm.Excluindo]: 'Exclusão de uma Escola desativada.',
+    [StatusForm.Pesquisando]: 'Academia de agility - Escola de treinamento e adastramento de cães.',
+    [StatusForm.Editando]: 'Alteração de Dados da Escola.'
+  }
 
   const Cabecalho: Array<DataTableCabecalhoInterface> = [
     {
@@ -68,23 +69,9 @@ export default function Escola() {
 
   ]
 
-  /*const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };*/
-
   const [rsPesquisa, setRsPesquisa] = useState<Array<EscolaInterface>>([])
 
   const globalContext = (useContext(ContextoGlobal) as ContextoGlobalInterface)
-
-  const [localState, setLocalState] = useState({ acao: 'pesquisando' })
 
   const ZeraDados: EscolaInterface = {
     cnpj: '',
@@ -100,42 +87,6 @@ export default function Escola() {
   const [escola, setEscola] = useState<EscolaInterface>(ZeraDados)
 
   const [pesquisa, setPesquisa] = useState<PesquisaInterface>({ nome: '' })
-
-  /*const printTable = () =>
-
-    <>
-      {rsPesquisa
-        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-        .map((row) => (
-          <TableRow
-            key={row.idEscola}
-          //sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-          >
-            <TableCell component="th" scope="row">
-              {row.idEscola}
-            </TableCell>
-            <TableCell align="left">{row.nome}</TableCell>
-            <TableCell align="left">{row.cnpj}</TableCell>
-            <TableCell align="left">{row.email}</TableCell>
-            <TableCell align='left'>
-              <IconButton
-                type="button"
-                sx={{ p: '10px' }}
-                aria-label="delete"
-                onClick={() => btEditar(row.idEscola, 'excluindo')}>
-                <DeleteOutlineOutlinedIcon />
-              </IconButton>
-              <IconButton
-                type="button"
-                sx={{ p: '10px' }}
-                aria-label="editar"
-                onClick={() => btEditar(row.idEscola, 'editando')}>
-                <EditOutlinedIcon />
-              </IconButton>
-            </TableCell>
-          </TableRow>
-        ))}
-    </>*/
 
   const federacoes = [
     'Federação Brasileira',
@@ -179,25 +130,27 @@ export default function Escola() {
     setEscola({ ...escola, tipo: (event.target as HTMLInputElement).value });
   };
 
-  const btEditar = (arg: any, acao: string) => {
+  const btEditar = (arg: any, acao: StatusForm) => {
 
     let clsEscola: ClsEscola = new ClsEscola()
     clsEscola.btEditar<EscolaInterface>(
       globalContext,
       arg.idEscola,
       setEscola,
-      setLocalState,
+      setStatusForm,
       acao
     )
 
   }
 
   const btIncluir = () => {
-    setLocalState({ acao: 'incluindo' })
+    setEscola(ZeraDados)
+    setStatusForm(StatusForm.Incluindo)
   }
 
   const btCancelar = () => {
-    setLocalState({ acao: 'pesquisando' })
+    setEscola(ZeraDados)
+    setStatusForm(StatusForm.Pesquisando)
     btPesquisar()
   }
 
@@ -216,12 +169,7 @@ export default function Escola() {
         if (rs.ok) {
 
           globalContext.setMensagemState({ exibir: true, mensagem: 'Escola Excluída com Sucesso', tipo: 'aviso' })
-
-          setEscola(ZeraDados)
-
-          setLocalState({ acao: 'pesquisando' })
-
-          btPesquisar()
+          btCancelar()
 
         } else {
 
@@ -253,9 +201,7 @@ export default function Escola() {
       }).then(rs => {
         if (rs.ok) {
 
-          setEscola(ZeraDados)
-          setLocalState({ acao: 'pesquisando' })
-          btPesquisar()
+          btCancelar()
 
           globalContext.setMensagemState({ exibir: true, mensagem: 'Dados Alterados com Sucesso', tipo: 'aviso' })
         } else {
@@ -280,6 +226,7 @@ export default function Escola() {
         method: 'POST'
       }).then(rs => {
         if (rs.status === 201) {
+
           setEscola(ZeraDados)
           globalContext.setMensagemState({ exibir: true, mensagem: 'Escola Cadastrada com Sucesso', tipo: 'aviso' })
 
@@ -346,7 +293,7 @@ export default function Escola() {
               <Typography component="h5" variant="h5" align="left">
                 Cadastro de Escola
                 <Typography variant="body2" gutterBottom>
-                  Inclusão de uma nova escola
+                  {TituloForm[statusForm]}
                 </Typography>
               </Typography>
 
@@ -355,182 +302,167 @@ export default function Escola() {
               </IconButton>
             </Grid>
 
-            {localState.acao === 'pesquisando' &&
+            <Condicional condicao={statusForm === StatusForm.Pesquisando}>
 
-              <>
-                <Grid item xs={7} sm={10} sx={{ mb: 5 }}>
-                  <InputText label='' placeholder='Pesquisar' tipo="text" dados={pesquisa} field="nome" setState={setPesquisa} />
+              <Grid item xs={7} sm={10} sx={{ mb: 5 }}>
+                <InputText
+                  label='Pesquisar'
+                  tipo="text"
+                  dados={pesquisa}
+                  field="nome"
+                  setState={setPesquisa}
+                  iconeEnd='search'
+                  onClickIconeEnd={() => btPesquisar()}
+                  teclaPress={[{ key: 'Enter', onKey: btPesquisar }]}
+                  
+                />
 
-                </Grid>
-                <Grid item xs={5} sm={2} sx={{ textAlign: { xs: 'right', sm: 'center' }, mb: 5 }}>
-                  <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={() => btPesquisar()}>
-                    <SearchIcon />
-                  </IconButton>
+              </Grid>
+              <Grid item xs={5} sm={2} sx={{ textAlign: { xs: 'right', sm: 'center' }, mb: 5 }}>
+                {/*<IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={() => btPesquisar()}>
+                  <SearchIcon />
+                  </IconButton>*/}
 
-                  <Button variant='contained' onClick={() => btIncluir()}>Incluir</Button>
+                <Button variant='contained' onClick={() => btIncluir()}>Incluir</Button>
 
-                </Grid>
-              </>
-            }
+              </Grid>
+            </Condicional>
 
-            {localState.acao !== 'pesquisando' &&
-              <>
-                <Grid item xs={12} sm={10} mt={3}>
-                  <InputText autofoco label="Nome" tipo="text" dados={escola} field="nome" setState={setEscola} disabled={localState.acao === 'excluindo' ? true : false} />
-                </Grid>
-                <Grid item xs={12} sm={2} mt={3} sx={{ pl: { sm: 2 } }}>
-                  <FormControlLabel
-                    value="ativo"
-                    control={
-                      <Checkbox
-                        disabled={localState.acao === 'excluindo' ? true : false}
-                        checked={escola.ativo}
-                        onChange={handleChangeAtivo}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                      />}
-                    label="Ativo"
-                    labelPlacement="top"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={8} mt={1}>
-                  <InputText label="CNPJ" tipo="text" dados={escola} field="cnpj" setState={setEscola} disabled={localState.acao === 'excluindo' ? true : false} />
-                </Grid>
+            <Condicional condicao={statusForm !== StatusForm.Pesquisando}>
+              <Grid item xs={12} sm={10} mt={3}>
+                <InputText 
+                  autofoco 
+                  label="Nome" 
+                  tipo="txt" 
+                  dados={escola} 
+                  field="nome" 
+                  setState={setEscola} 
+                  disabled={statusForm === StatusForm.Excluindo} 
+                />
+              </Grid>
+              <Grid item xs={12} sm={2} mt={3} sx={{ pl: { sm: 2 } }}>
+                <FormControlLabel
+                  value="ativo"
+                  control={
+                    <Checkbox
+                      disabled={statusForm === StatusForm.Excluindo}
+                      checked={escola.ativo}
+                      onChange={handleChangeAtivo}
+                      inputProps={{ 'aria-label': 'controlled' }}
 
-                <Grid item xs={12} sm={2} mt={2} ml={1} sx={{ pl: { sm: 2 } }} borderRadius={3} border={1} borderColor={'lightgray'}>
-                  <FormControl>
-                    <FormLabel id="demo-controlled-radio-buttons-group">Tipo</FormLabel>
-                    <RadioGroup
-                      aria-labelledby="demo-controlled-radio-buttons-group"
-                      name="controlled-radio-buttons-group"
-                      value={escola.tipo}
-                      onChange={handleChangeTipo}
-                      
-                    >
-                      <FormControlLabel value="oficial" control={<Radio />} label="Oficial" disabled={localState.acao === 'excluindo' ? true : false} />
-                      <FormControlLabel value="match" control={<Radio />} label="Match" disabled={localState.acao === 'excluindo' ? true : false} />
-                    </RadioGroup>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={8} mt={3} mr={1}>
-                  <InputText label="e-mail" tipo="text" dados={escola} field="email" setState={setEscola} disabled={localState.acao === 'excluindo' ? true : false} />
-                </Grid>
-                <Grid item xs={12} sm={3} mt={3}>
-                  <Box>
-                    <FormControl fullWidth>
-                      <InputLabel sx={{ mt: -1 }}>Federação</InputLabel>
-                      <Select
-                        size='small'
-                        value={escola.federacao}
-                        label="Federação"
-                        onChange={handleChangeFederacao}
-                        disabled={localState.acao === 'excluindo' ? true : false}
-                      >
-                        {federacoes.map((federacao, i) => (
-                          <MenuItem key={i} value={i}>{federacao}</MenuItem>
-                        ))}
-
-                      </Select>
-
-                    </FormControl>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={8} mt={3} >
-
-                  <Box
-                    sx={{
-                      width: 200,
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Rating
-                      disabled={localState.acao === 'excluindo' ? true : false}
-                      name="hover-feedback"
-                      value={escola.qualidade}
-                      precision={0.5}
-                      getLabelText={getLabelText}
-                      onChange={(event, newValue) => {
-                        setEscola({ ...escola, qualidade: newValue });
-                      }}
-                      onChangeActive={(event, newHover) => {
-                        setHover(newHover);
-                      }}
-                      emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-                    />
-                    {escola.qualidade !== null && (
-                      <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : escola.qualidade]}</Box>
-                    )}
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={2} mt={3} mb={3}>
-
-                  <FormControlLabel control={
-                    <Switch
-                      disabled={localState.acao === 'excluindo' ? true : false}
-                      checked={escola.veterinario}
-                      onChange={handleChangeVeterinario}
                     />}
-                    label="Tem Veterinário?" />
-                </Grid>
-              </>
-            }
+                  label="Ativo"
+                  labelPlacement="top"
+                />
+              </Grid>
+              <Grid item xs={12} sm={8} mt={1}>
+                <InputText label="CNPJ" tipo="cnpj" dados={escola} field="cnpj" setState={setEscola} disabled={statusForm === StatusForm.Excluindo} />
+              </Grid>
 
-            {localState.acao === 'incluindo' &&
+              <Grid item xs={12} sm={2} mt={2} ml={1} sx={{ pl: { sm: 2 } }} borderRadius={3} border={1} borderColor={'lightgray'}>
+                <FormControl>
+                  <FormLabel id="demo-controlled-radio-buttons-group">Tipo</FormLabel>
+                  <RadioGroup
+                    aria-labelledby="demo-controlled-radio-buttons-group"
+                    name="controlled-radio-buttons-group"
+                    value={escola.tipo}
+                    onChange={handleChangeTipo}
+                  >
+                    <FormControlLabel value="oficial" control={<Radio />} label="Oficial" disabled={statusForm === StatusForm.Excluindo} />
+                    <FormControlLabel value="match" control={<Radio />} label="Match" disabled={statusForm === StatusForm.Excluindo} />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={8} mt={3} mr={1}>
+                <InputText label="e-mail" tipo="email" dados={escola} field="email" setState={setEscola} disabled={statusForm === StatusForm.Excluindo} />
+              </Grid>
+              <Grid item xs={12} sm={3} mt={3}>
+                <Box>
+                  <FormControl fullWidth>
+                    <InputLabel sx={{ mt: -1 }}>Federação</InputLabel>
+                    <Select
+                      size='small'
+                      value={escola.federacao}
+                      label="Federação"
+                      onChange={handleChangeFederacao}
+                      disabled={statusForm === StatusForm.Excluindo}
+                    >
+                      {federacoes.map((federacao, i) => (
+                        <MenuItem key={i} value={i}>{federacao}</MenuItem>
+                      ))}
+
+                    </Select>
+
+                  </FormControl>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={8} mt={3} >
+
+                <Box
+                  sx={{
+                    width: 200,
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Rating
+                    disabled={statusForm === StatusForm.Excluindo}
+                    name="hover-feedback"
+                    value={escola.qualidade}
+                    precision={0.5}
+                    getLabelText={getLabelText}
+                    onChange={(event, newValue) => {
+                      setEscola({ ...escola, qualidade: newValue });
+                    }}
+                    onChangeActive={(event, newHover) => {
+                      setHover(newHover);
+                    }}
+                    emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                  />
+                  {escola.qualidade !== null && (
+                    <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : escola.qualidade]}</Box>
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={2} mt={3} mb={3}>
+
+                <FormControlLabel control={
+                  <Switch
+                    disabled={statusForm === StatusForm.Excluindo}
+                    checked={escola.veterinario}
+                    onChange={handleChangeVeterinario}
+                  />}
+                  label="Tem Veterinário?" />
+              </Grid>
+            </Condicional>
+
+            <Condicional condicao={statusForm === StatusForm.Incluindo}>
               <Button sx={{ mr: 2 }} startIcon={<CheckIcon />} variant="contained" onClick={btConfirmarInclusao}>Confirmar</Button>
-            }
+            </Condicional>
 
-            {localState.acao === 'editando' &&
+            <Condicional condicao={statusForm === StatusForm.Editando}>
               <Button sx={{ mr: 2 }} startIcon={<CheckIcon />} variant="contained" onClick={btConfirmarEdicao}>Confirmar</Button>
-            }
+            </Condicional>
 
-            {localState.acao === 'excluindo' &&
+            <Condicional condicao={statusForm === StatusForm.Excluindo}>
               <Button sx={{ mr: 2 }} startIcon={<CheckIcon />} variant="contained" onClick={btConfirmarExclusao}>Confirmar</Button>
-            }
+            </Condicional>
 
-            {localState.acao !== 'pesquisando' &&
+            <Condicional condicao={statusForm !== StatusForm.Pesquisando}>
               <Button startIcon={<CloseIcon />} variant="contained" onClick={btCancelar}>Cancelar</Button>
-            }
+            </Condicional>
 
-            {
-              localState.acao === 'pesquisando' &&
-              <>
-                <Grid item xs={12} sx={{ mt: 3 }}>
-                  <CreateTable
-                    dados={rsPesquisa}
-                    cabecalho={Cabecalho}
-                    onEditar={(arg) => btEditar(arg, 'editando')}
-                    onExcluir={(arg) => btEditar(arg, 'excluindo')} />
-                </Grid>
-                {/*<TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} size="small">
-                    <TableHead>
-                      <TableRow>
-                        <StyledTableCell align="left">ID</StyledTableCell>
-                        <StyledTableCell align="left">NOME</StyledTableCell>
-                        <StyledTableCell align="left">CNPJ</StyledTableCell>
-                        <StyledTableCell align="left">E-MAIL</StyledTableCell>
-                        <StyledTableCell align="left">AÇÕES</StyledTableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {
-                        printTable()
-                      }
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                <TablePagination
-                  labelRowsPerPage="Qtd: "
-                  rowsPerPageOptions={[10, 25, 100]}
-                  component="div"
-                  count={rsPesquisa.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                    />*/}
-              </>
-            }
+            <Condicional condicao={statusForm === StatusForm.Pesquisando}>
+
+              <Grid item xs={12} sx={{ mt: 3 }}>
+                <CreateTable
+                  dados={rsPesquisa}
+                  cabecalho={Cabecalho}
+                  onEditar={(arg) => btEditar(arg, StatusForm.Editando)}
+                  onExcluir={(arg) => btEditar(arg, StatusForm.Excluindo)} />
+              </Grid>
+
+            </Condicional>
           </Grid>
         </Paper >
       </Container >

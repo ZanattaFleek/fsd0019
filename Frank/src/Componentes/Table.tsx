@@ -115,7 +115,6 @@ export default function CreateTable({
                         </StyledTableCell>
                       )
                     })
-                      // <IconButton onClick={() => onExcluir( row && row['id'] ? (row['id'] as any) : 0, 'excluindo')} sx={{ mx: 0, px: 0 }}>
                     }
                     <Condicional condicao={typeof onEditar == 'function' || typeof onExcluir == 'function'}>
                       <StyledTableCell>
