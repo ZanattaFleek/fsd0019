@@ -7,32 +7,33 @@ import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import MaskedInput from 'react-text-mask';
-import { OutlinedInput } from '@mui/material';
+
+
 
 interface CustomProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
   name: string;
 }
 
-
 const TextMaskCustom = React.forwardRef<any, CustomProps>(
   function TextMaskCustom(props, ref) {
     const { onChange, ...other } = props;
-    
     return (
       <MaskedInput
-        //mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-        mask={[/[0-9]/,/[0-9]/,'.',/[0-9]/,/[0-9]/,/[0-9]/, '.', /[0-9]/,/[0-9]/,/[0-9]/,'/',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/,'-',/[0-9]/,/[0-9]/]}
-        placeholder="CNPJ"
-        //guide={false}
-        //id="my-input-id"
-        //onBlur={() => {}}
+        {...other}
+        mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+        className="form-control"
+        placeholder="Enter a phone number"
+        guide={false}
+        id="my-input-id"
+        onBlur={() => {}}
         onChange={() => {}}
       />
     );
-  }
-)
-/*const NumericFormatCustom = React.forwardRef<NumericFormatProps, CustomProps>(
+  },
+);
+
+const NumericFormatCustom = React.forwardRef<NumericFormatProps, CustomProps>(
   function NumericFormatCustom(props, ref) {
     const { onChange, ...other } = props;
 
@@ -55,17 +56,17 @@ const TextMaskCustom = React.forwardRef<any, CustomProps>(
       />
     );
   },
-);*/
+);
 
 interface State {
   textmask: string;
-  //numberformat: string;
+  numberformat: string;
 }
 
 export default function FormattedInputs() {
   const [values, setValues] = React.useState<State>({
-    textmask: '(100) 000-0000'
-    //numberformat: '1320',
+    textmask: '(100) 000-0000',
+    numberformat: '1320',
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,20 +86,15 @@ export default function FormattedInputs() {
     >
       <FormControl variant="standard">
         <InputLabel htmlFor="formatted-text-mask-input">react-imask</InputLabel>
-        <OutlinedInput
+        <Input
           value={values.textmask}
           onChange={handleChange}
           name="textmask"
           id="formatted-text-mask-input"
           inputComponent={TextMaskCustom as any}
-          //InputProps={{
-          //  inputComponent: TextMaskCustom as any,
-          //}}
-          //variant="standard"
-
         />
       </FormControl>
-      {/*<TextField
+      <TextField
         label="react-number-format"
         value={values.numberformat}
         onChange={handleChange}
@@ -108,7 +104,7 @@ export default function FormattedInputs() {
           inputComponent: NumericFormatCustom as any,
         }}
         variant="standard"
-    />*/}
+      />
     </Box>
   );
 }
