@@ -9,20 +9,23 @@ import FormControl from '@mui/material/FormControl';
 import MaskedInput from 'react-text-mask';
 import { OutlinedInput } from '@mui/material';
 
-interface CustomProps {
-  onChange: (event: { target: { name: string; value: string } }) => void;
-  name: string;
-}
+//interface CustomProps {
+//  onChange: (event: { target: { name: string; value: string } }) => void;
+//  name: string;
+//}
 
 
-const TextMaskCustom = React.forwardRef<any, CustomProps>(
-  function TextMaskCustom(props, ref) {
-    const { onChange, ...other } = props;
+//const TextMaskCustom = React.forwardRef<any, CustomProps>(
+//const TextMaskCustom = React.forwardRef<any>(
+function TextMaskCustom() {
+    //const { onChange, ...other } = props;
     
+    const maskCNPJ = [/[0-9]/,/[0-9]/,'.',/[0-9]/,/[0-9]/,/[0-9]/, '.', /[0-9]/,/[0-9]/,/[0-9]/,'/',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/,'-',/[0-9]/,/[0-9]/]
     return (
       <MaskedInput
         //mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-        mask={[/[0-9]/,/[0-9]/,'.',/[0-9]/,/[0-9]/,/[0-9]/, '.', /[0-9]/,/[0-9]/,/[0-9]/,'/',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/,'-',/[0-9]/,/[0-9]/]}
+        //mask={[/[0-9]/,/[0-9]/,'.',/[0-9]/,/[0-9]/,/[0-9]/, '.', /[0-9]/,/[0-9]/,/[0-9]/,'/',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/,'-',/[0-9]/,/[0-9]/]}
+        mask={maskCNPJ}
         placeholder="CNPJ"
         //guide={false}
         //id="my-input-id"
@@ -31,7 +34,7 @@ const TextMaskCustom = React.forwardRef<any, CustomProps>(
       />
     );
   }
-)
+//)
 /*const NumericFormatCustom = React.forwardRef<NumericFormatProps, CustomProps>(
   function NumericFormatCustom(props, ref) {
     const { onChange, ...other } = props;
@@ -88,8 +91,8 @@ export default function FormattedInputs() {
         <OutlinedInput
           value={values.textmask}
           onChange={handleChange}
-          name="textmask"
-          id="formatted-text-mask-input"
+          //name="textmask"
+          //id="formatted-text-mask-input"
           inputComponent={TextMaskCustom as any}
           //InputProps={{
           //  inputComponent: TextMaskCustom as any,

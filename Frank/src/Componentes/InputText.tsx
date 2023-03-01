@@ -3,8 +3,22 @@ import { FormControl, Icon, IconButton, InputAdornment, InputLabel, Typography }
 import OutlinedInput from '@mui/material/OutlinedInput';
 import ClsValidaCampo from '../Utils/ClsValidaCampos';
 import Condicional from '../Layout/Condicional';
+import MaskedInput from 'react-text-mask';
 
+const maskCNPJ = [/[0-9]/,/[0-9]/,'.',/[0-9]/,/[0-9]/,/[0-9]/, '.', /[0-9]/,/[0-9]/,/[0-9]/,'/',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/,'-',/[0-9]/,/[0-9]/]
+const maskCPF = [/[0-9]/,/[0-9]/,/[0-9]/,'.',/[0-9]/,/[0-9]/,/[0-9]/, '.', /[0-9]/,/[0-9]/,/[0-9]/,'-',/[0-9]/,/[0-9]/]
+const maskCEP = [/[0-9]/,/[0-9]/,'.',/[0-9]/,/[0-9]/,/[0-9]/, '-',/[0-9]/,/[0-9]/,/[0-9]/]
+const maskTEL = ['(',/[0-9]/,/[0-9]/, ')', ' ',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/, '-',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/]
 
+function TextMaskCustom() {
+ 
+  return (
+    <MaskedInput
+      mask={maskCNPJ}
+      onChange={() => {}}
+    />
+  );
+}
 interface TeclaPressInterface {
   key: string
   onKey: () => void
@@ -142,7 +156,7 @@ export default function InputText(this: any,
           endAdornment={exibirIcone('end', iconeEnd, onClickIconeEnd)}
           startAdornment={exibirIcone('start', iconeStart, onClickIconeStart)}
           onBlur={validarNaoVazio}
-
+          inputComponent={TextMaskCustom as any}
 
 
         />
