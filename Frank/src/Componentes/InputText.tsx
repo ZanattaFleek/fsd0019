@@ -5,20 +5,29 @@ import ClsValidaCampo from '../Utils/ClsValidaCampos';
 import Condicional from '../Layout/Condicional';
 import MaskedInput from 'react-text-mask';
 
-const maskCNPJ = [/[0-9]/,/[0-9]/,'.',/[0-9]/,/[0-9]/,/[0-9]/, '.', /[0-9]/,/[0-9]/,/[0-9]/,'/',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/,'-',/[0-9]/,/[0-9]/]
-const maskCPF = [/[0-9]/,/[0-9]/,/[0-9]/,'.',/[0-9]/,/[0-9]/,/[0-9]/, '.', /[0-9]/,/[0-9]/,/[0-9]/,'-',/[0-9]/,/[0-9]/]
-const maskCEP = [/[0-9]/,/[0-9]/,'.',/[0-9]/,/[0-9]/,/[0-9]/, '-',/[0-9]/,/[0-9]/,/[0-9]/]
-const maskTEL = ['(',/[0-9]/,/[0-9]/, ')', ' ',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/, '-',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/]
+interface maskInterface {
+  tipo: string
+  aux_mask: any
+}
 
-function TextMaskCustom() {
- 
+const maskings: Array<maskInterface> = [
+  { tipo: 'cnpj', aux_mask: [/[0-9]/,/[0-9]/,'.',/[0-9]/,/[0-9]/,/[0-9]/, '.', /[0-9]/,/[0-9]/,/[0-9]/,'/',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/,'-',/[0-9]/,/[0-9]/] },
+  { tipo: 'cpf', aux_mask: [/[0-9]/,/[0-9]/,/[0-9]/,'.',/[0-9]/,/[0-9]/,/[0-9]/, '.', /[0-9]/,/[0-9]/,/[0-9]/,'-',/[0-9]/,/[0-9]/]},
+  { tipo: 'cep', aux_mask: [/[0-9]/,/[0-9]/,'.',/[0-9]/,/[0-9]/,/[0-9]/, '-',/[0-9]/,/[0-9]/,/[0-9]/]},
+  { tipo: 'tel', aux_mask: ['(',/[0-9]/,/[0-9]/, ')', ' ',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/, '-',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/]}
+];
+
+function TextMaskCustom(tipo: string) {
+  
+  const _mask = maskings.find((mascaras) => mascaras.tipo === tipo)
   return (
     <MaskedInput
-      mask={maskCNPJ}
+      mask={_mask}
       onChange={() => {}}
     />
   );
 }
+
 interface TeclaPressInterface {
   key: string
   onKey: () => void

@@ -100,6 +100,7 @@ const settings: Array<menuSettingsInterface> = [
     { opcao: 'Perfil', caminho: '/' },
     { opcao: 'Logout', caminho: '/' }
 ];
+
 const drawerWidth = 300;
 
 
