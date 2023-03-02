@@ -406,6 +406,17 @@
       "federacao": 1,
       "veterinario": true,
       "qualidade": 3
+    },
+    {
+      "cnpj": "20.278.531/0001-58",
+      "email": "teste@bol.com.br",
+      "idEscola": 43,
+      "nome": "Frank",
+      "ativo": false,
+      "tipo": "",
+      "federacao": "",
+      "veterinario": false,
+      "qualidade": 2
     }
   ],
   "usuarios": [

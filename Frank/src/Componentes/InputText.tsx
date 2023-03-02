@@ -3,30 +3,12 @@ import { FormControl, Icon, IconButton, InputAdornment, InputLabel, Typography }
 import OutlinedInput from '@mui/material/OutlinedInput';
 import ClsValidaCampo from '../Utils/ClsValidaCampos';
 import Condicional from '../Layout/Condicional';
-import MaskedInput from 'react-text-mask';
+import MaskedInput, { Mask } from 'react-text-mask';
 
-interface maskInterface {
-  tipo: string
-  aux_mask: any
-}
-
-const maskings: Array<maskInterface> = [
-  { tipo: 'cnpj', aux_mask: [/[0-9]/,/[0-9]/,'.',/[0-9]/,/[0-9]/,/[0-9]/, '.', /[0-9]/,/[0-9]/,/[0-9]/,'/',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/,'-',/[0-9]/,/[0-9]/] },
-  { tipo: 'cpf', aux_mask: [/[0-9]/,/[0-9]/,/[0-9]/,'.',/[0-9]/,/[0-9]/,/[0-9]/, '.', /[0-9]/,/[0-9]/,/[0-9]/,'-',/[0-9]/,/[0-9]/]},
-  { tipo: 'cep', aux_mask: [/[0-9]/,/[0-9]/,'.',/[0-9]/,/[0-9]/,/[0-9]/, '-',/[0-9]/,/[0-9]/,/[0-9]/]},
-  { tipo: 'tel', aux_mask: ['(',/[0-9]/,/[0-9]/, ')', ' ',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/, '-',/[0-9]/,/[0-9]/,/[0-9]/,/[0-9]/]}
-];
-
-function TextMaskCustom(tipo: string) {
-  
-  const _mask = maskings.find((mascaras) => mascaras.tipo === tipo)
-  return (
-    <MaskedInput
-      mask={_mask}
-      onChange={() => {}}
-    />
-  );
-}
+const maskCNPJ: Mask = [/[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '/', /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/]
+const maskCPF: Mask = [/[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/]
+const maskCEP: Mask = [/[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/, /[0-9]/]
+const maskTEL: Mask = ['(', /[0-9]/, /[0-9]/, ')', ' ', /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/]
 
 interface TeclaPressInterface {
   key: string
@@ -146,29 +128,52 @@ export default function InputText(this: any,
     }
   }
 
+  /*const TextMaskCustom = (tipo: string) => {
+    let _mask: Mask | ((value: string) => Mask)
+    
+    if (tipo === 'cnpj') {
+      _mask = maskCNPJ
+    } else if (tipo === 'cpf'){
+      _mask = maskCPF
+    } else if (tipo === 'cep'){
+      _mask = maskCEP
+    } else if (tipo === 'tel'){
+      _mask = maskTEL
+    }
+    
+    return (
+      <MaskedInput
+        mask={[/[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '/', /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/]}
+      //onChange={() => {}}
+      />
+    );
+  }*/
+
   return (
     <>
+
       <FormControl sx={{ width: '100%' }} variant="outlined">
-        <InputLabel sx={{ mt: -1 }} htmlFor="outlined-adornment-password">{label}</InputLabel>
-        <OutlinedInput
-          autoFocus={autofoco}
-          size="small"
-          sx={{ my: 0, py: 0, height: 40 }}
-          id="outlined-name"
-          placeholder={placeholder}
-          label={label}
-          value={dados[field]}
-          disabled={disabled}
-          onChange={(e: any) => setState({ ...dados, [field]: e.target.value })}
-          type={type}
-          onKeyDown={(e) => onKey(e.key)}
-          endAdornment={exibirIcone('end', iconeEnd, onClickIconeEnd)}
-          startAdornment={exibirIcone('start', iconeStart, onClickIconeStart)}
-          onBlur={validarNaoVazio}
-          inputComponent={TextMaskCustom as any}
+       
+          <InputLabel sx={{ mt: -1 }} htmlFor="outlined-adornment-password">{label}</InputLabel>
+          <OutlinedInput
+            autoFocus={autofoco}
+            size="small"
+            sx={{ my: 0, py: 0, height: 40 }}
+            id="outlined-name"
+            placeholder={placeholder}
+            label={label}
+            value={dados[field]}
+            disabled={disabled}
+            onChange={(e: any) => setState({ ...dados, [field]: e.target.value })}
+            type={type}
+            onKeyDown={(e) => onKey(e.key)}
+            endAdornment={exibirIcone('end', iconeEnd, onClickIconeEnd)}
+            startAdornment={exibirIcone('start', iconeStart, onClickIconeStart)}
+            onBlur={validarNaoVazio}
+            //inputComponent={TextMaskCustom as any}
+          />
+        
 
-
-        />
 
         <Condicional condicao={validacao.length !== 0}>
           <Typography variant='caption' textAlign='left' color='warning.main' >{validacao}</Typography>
