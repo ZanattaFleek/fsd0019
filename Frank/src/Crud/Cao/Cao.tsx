@@ -1,3 +1,9 @@
+export default function Cao() {
+  return(
+    <></>
+  )
+}
+/*
 import { useContext, useState } from 'react';
 import { ContextoGlobal, ContextoGlobalInterface } from '../../Contextos/ContextoGlobal';
 import { EscolaInterface } from '../../Interfaces/EscolaInterfaces';
@@ -497,3 +503,4 @@ export default function Cao() {
     </>
   );
 }
+*/

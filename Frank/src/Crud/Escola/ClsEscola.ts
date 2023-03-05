@@ -1,5 +1,6 @@
 import { URL_SERVIDOR } from "../../Config/Setup"
 import { ContextoGlobalInterface } from "../../Contextos/ContextoGlobal"
+import { MensagemStatePadrao, MensagemTipo } from "../../GlobalStates/MensagemState";
 import { StatusForm } from "./Escola";
 
 const TEMPO_REFRESH_TEMPORARIO = 500
@@ -13,7 +14,16 @@ export default class ClsEscola {
     setStatusForm: React.Dispatch<React.SetStateAction<StatusForm>>,
     acao: StatusForm
   ) {
-    globalContext.setMensagemState({ exibir: true, mensagem: 'Pesquisando Escola', tipo: 'processando' })
+    
+     
+    globalContext.setMensagemState( {
+      ...globalContext.mensagemState,
+      titulo: 'Pesquisando!',
+      exibir: true,
+      mensagem: 'Pesquisando informações no banco de dados!',
+      tipo: MensagemTipo.Info,
+      exibirBotao: false
+    } )
 
     setTimeout(() => {
 
@@ -27,14 +37,21 @@ export default class ClsEscola {
         // Primeiro Then do Fetch - Testo Status + Tratamento dos dados
 
         if (rs.status === 200) {
-          globalContext.setMensagemState({ exibir: false, mensagem: '', tipo: 'aviso' })
+        globalContext.setMensagemState( MensagemStatePadrao )
 
           // Envio somente os dados para o próximo Then....
           //console.log(rs.json())
           return rs.json()
 
         } else {
-          globalContext.setMensagemState({ exibir: true, mensagem: 'Erro ao Pesquisar Escola!!!', tipo: 'erro' })
+          globalContext.setMensagemState( {
+            ...globalContext.mensagemState,
+            titulo: 'Erro! Consulte Suporte!',
+            exibir: true,
+            mensagem: 'Erro ao Consultar Escola',
+            tipo: MensagemTipo.Error,
+            exibirBotao: true
+          } )
         }
       }).then(rsEscola => {
         
@@ -42,7 +59,14 @@ export default class ClsEscola {
         setStatusForm(acao)
 
       }).catch(() => {
-        globalContext.setMensagemState({ exibir: true, mensagem: 'Erro no Servidor. Não foi possível pesquisar Escola!!!', tipo: 'erro' })
+        globalContext.setMensagemState( {
+          ...globalContext.mensagemState,
+          titulo: 'Erro! Consulte Suporte!',
+          exibir: true,
+          mensagem: 'Erro ao Consultar Escola!',
+          tipo: MensagemTipo.Error,
+          exibirBotao: true
+        } )
       })
 
     }, TEMPO_REFRESH_TEMPORARIO)

@@ -1,3 +1,10 @@
+
+export default class ClsCao {
+  
+
+}
+
+/*
 import { URL_SERVIDOR } from "../../Config/Setup"
 import { ContextoGlobalInterface } from "../../Contextos/ContextoGlobal"
 
@@ -47,3 +54,4 @@ export default class ClsCao {
   }
 
 }
+*/

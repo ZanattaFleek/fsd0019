@@ -6,6 +6,7 @@ import InputText from '../Componentes/InputText';
 import { URL_SERVIDOR } from '../Config/Setup';
 import { theme } from '../Config/Theme';
 import { ContextoGlobal, ContextoGlobalInterface } from '../Contextos/ContextoGlobal';
+import { MensagemTipo } from '../GlobalStates/MensagemState';
 import Copyright from '../Layout/Copyright';
 
 interface LoginInterface {
@@ -28,6 +29,7 @@ export default function Login() {
   })
 
   const setLoginState = (useContext(ContextoGlobal) as ContextoGlobalInterface).setLoginState
+  const {mensagemState, setMensagemState} = (useContext(ContextoGlobal) as ContextoGlobalInterface)
 
   const logar = () => {
 
@@ -53,10 +55,22 @@ export default function Login() {
             avatar: rs[0].avatar
           })
         } else {
-          console.log('Usuário Não Encontrado')
+          setMensagemState( {
+            ...mensagemState,
+            exibir: true,
+            mensagem: 'Verifique Usuário / Senha!',
+            tipo: MensagemTipo.Error,
+            exibirBotao: true
+          } )
         }
-      }).catch(e => {
-        console.log('Erro no Fetch....', e)
+      }).catch(() => {
+        setMensagemState( {
+          ...mensagemState,
+          exibir: true,
+          mensagem: 'Login Não Realizado!',
+          tipo: MensagemTipo.Error,
+          exibirBotao: true
+        } )
       })
     }, 3000)
   }

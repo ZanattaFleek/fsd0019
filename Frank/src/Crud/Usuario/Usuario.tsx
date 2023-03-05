@@ -1,3 +1,11 @@
+export default function Escola() {
+  return(
+    <></>
+  )
+}
+
+
+/*
 import { useContext, useState } from 'react';
 import { ContextoGlobal, ContextoGlobalInterface } from '../../Contextos/ContextoGlobal';
 import { URL_SERVIDOR } from '../../Config/Setup';
@@ -376,3 +384,4 @@ export default function Escola() {
     </>
   );
 }
+*/
