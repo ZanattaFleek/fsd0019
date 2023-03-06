@@ -34,7 +34,7 @@ export default function Escola() {
 
 
   const [statusForm, setStatusForm] = useState<StatusForm>(StatusForm.Pesquisando)
-  const {mensagemState, setMensagemState} = (useContext(ContextoGlobal) as ContextoGlobalInterface)
+  const { mensagemState, setMensagemState } = (useContext(ContextoGlobal) as ContextoGlobalInterface)
 
 
   const TituloForm = {
@@ -167,16 +167,6 @@ export default function Escola() {
 
   const btConfirmarExclusao = () => {
 
-    
-    setMensagemState( {
-      ...mensagemState,
-      titulo: 'Excluíndo!',
-      exibir: true,
-      mensagem: 'Excluindo os dados da Escola',
-      tipo: MensagemTipo.Info,
-      exibirBotao: false
-    } )
-    
     setTimeout(() => {
 
       fetch(URL_SERVIDOR.concat('/escola/'.concat(escola.idEscola.toString())), {
@@ -187,55 +177,45 @@ export default function Escola() {
       }).then(rs => {
 
         if (rs.ok) {
-          setMensagemState( {
+          setMensagemState({
             ...mensagemState,
             titulo: 'Confirmado!',
             exibir: true,
             mensagem: 'Escola Excluída com Sucesso!',
-            tipo: MensagemTipo.Info,
+            tipo: MensagemTipo.Sucesso,
             exibirBotao: true
-          } )
-          btCancelar()
+          })
+
 
         } else {
 
-          setMensagemState( {
+          setMensagemState({
             ...mensagemState,
             titulo: 'Erro ao excluir',
             exibir: true,
             mensagem: 'Erro ao excluir!',
             tipo: MensagemTipo.Error,
             exibirBotao: true
-          } )
-          
-
+          })
         }
 
       }).catch(() => {
-        setMensagemState( {
+        setMensagemState({
           ...mensagemState,
           titulo: 'Erro! Consulte Suporte!',
           exibir: true,
           mensagem: 'Erro ao Consultar Escola!',
           tipo: MensagemTipo.Error,
           exibirBotao: true
-        } )
+        })
 
       })
-
+      
     }, TEMPO_REFRESH_TEMPORARIO)
 
   }
 
   const btConfirmarEdicao = () => {
-    setMensagemState( {
-      ...mensagemState,
-      titulo: 'Alterando!',
-      exibir: true,
-      mensagem: 'Alterando dados da Escola',
-      tipo: MensagemTipo.Info,
-      exibirBotao: false
-    } )
 
     setTimeout(() => {
       fetch(URL_SERVIDOR.concat('/escola/'.concat(escola.idEscola.toString())), {
@@ -248,33 +228,35 @@ export default function Escola() {
       }).then(rs => {
         if (rs.ok) {
 
-          btCancelar()
-          setMensagemState( {
+          setMensagemState({
             ...mensagemState,
             titulo: 'Confirmado!',
             exibir: true,
             mensagem: statusForm === StatusForm.Incluindo ? 'Escola Cadastrada com Sucesso!' : 'Dados Alterados!',
-            tipo: MensagemTipo.Info,
+            tipo: MensagemTipo.Sucesso,
             exibirBotao: true
-          } )
+          })
+
+
         } else {
-          setMensagemState( {
+          setMensagemState({
             ...mensagemState,
             exibir: true,
             mensagem: 'Escola Não Atualizado!',
             tipo: MensagemTipo.Error,
             exibirBotao: true
-          } )
+          })
         }
+
       }).catch(() => {
-        setMensagemState( {
+        setMensagemState({
           ...mensagemState,
           titulo: 'Erro! Consulte Suporte!',
           exibir: true,
           mensagem: 'Erro ao Consultar Escola!',
           tipo: MensagemTipo.Error,
           exibirBotao: true
-        } )
+        })
       })
     }, TEMPO_REFRESH_TEMPORARIO)
   }
@@ -282,15 +264,6 @@ export default function Escola() {
   const btConfirmarInclusao = () => {
 
     if (validarDados()) {
-      setMensagemState( {
-        ...mensagemState,
-        titulo: 'Incluíndo!',
-        exibir: true,
-        mensagem: 'Incluíndo Escola',
-        tipo: MensagemTipo.Info,
-        exibirBotao: false
-      } )
-
       setTimeout(() => {
         fetch(URL_SERVIDOR.concat('/escola'), {
           body: JSON.stringify(escola),
@@ -302,50 +275,57 @@ export default function Escola() {
           if (rs.status === 201) {
 
             setEscola(ZeraDados)
-            setMensagemState( {
+            setMensagemState({
               ...mensagemState,
               titulo: 'Confirmado!',
               exibir: true,
               mensagem: statusForm === StatusForm.Incluindo ? 'Escola Cadastrada com Sucesso!' : 'Dados Alterados!',
-              tipo: MensagemTipo.Info,
+              tipo: MensagemTipo.Sucesso,
               exibirBotao: true
-            } )
+            })
 
           } else {
-            setMensagemState( {
+            setMensagemState({
               ...mensagemState,
               exibir: true,
               mensagem: 'Escola Não Cadastrada!',
               tipo: MensagemTipo.Error,
               exibirBotao: true
-            } )
+            })
           }
         }).catch(() => {
-          setMensagemState( {
+          setMensagemState({
             ...mensagemState,
             titulo: 'Erro! Consulte Suporte!',
             exibir: true,
             mensagem: 'Erro ao Consultar Escola!',
             tipo: MensagemTipo.Error,
             exibirBotao: true
-          } )
+          })
         })
       }, TEMPO_REFRESH_TEMPORARIO)
 
     } else {
-      setMensagemState( {
+      setMensagemState({
         ...mensagemState,
         titulo: 'Dados Obrigatórios!',
         exibir: true,
-        mensagem: 'Alguns dados são obrigatórios!! Preencha dos campos.',
+        mensagem: 'Alguns dados são obrigatórios!! Preencha os campos.',
         tipo: MensagemTipo.Warning,
         exibirBotao: true
-      } )
+      })
     }
   }
 
   const btPesquisar = () => {
-
+    setMensagemState({
+      ...mensagemState,
+      titulo: 'Pesquisando!',
+      exibir: true,
+      mensagem: 'Pesquisando informações no bando de dados.',
+      tipo: MensagemTipo.Loading,
+      exibirBotao: false
+    })
     setTimeout(() => {
 
       fetch(URL_SERVIDOR.concat('/escola?nome_like='.concat(pesquisa.nome)), {
@@ -359,27 +339,27 @@ export default function Escola() {
         // Primeiro Then do Fetch - Testo Status + Tratamento dos dados
 
         if (rs.status === 200) {
-          setMensagemState( MensagemStatePadrao )
+          setMensagemState(MensagemStatePadrao)
 
           // Envio somente os dados para o próximo Then....
           return rs.json()
 
         } else {
-          setMensagemState( MensagemStatePadrao )
+          setMensagemState(MensagemStatePadrao)
         }
       }).then(rsEscolas => {
 
         setRsPesquisa(rsEscolas)
 
       }).catch(() => {
-        setMensagemState( {
+        setMensagemState({
           ...mensagemState,
           titulo: 'Erro! Consulte Suporte!',
           exibir: true,
           mensagem: 'Erro ao Consultar Produtos!',
           tipo: MensagemTipo.Error,
           exibirBotao: true
-        } )
+        })
       })
 
     }, TEMPO_REFRESH_TEMPORARIO)

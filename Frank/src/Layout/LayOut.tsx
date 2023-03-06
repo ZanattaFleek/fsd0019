@@ -1,21 +1,17 @@
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import React from 'react';
-
 import { Outlet } from 'react-router-dom';
 import Mensagem from '../Componentes/Mensagem';
 import { theme } from '../Config/Theme';
-
 import { ContextoGlobal } from '../Contextos/ContextoGlobal';
 import useLayoutState from '../GlobalStates/LayoutState';
 import useLoginState from '../GlobalStates/LoginState';
 import useMensagemState from '../GlobalStates/MensagemState';
-
 import Login from '../Login/Login';
-import Appbar from './Appbar';
-import Footer from './Footer';
-
 import { Toolbar } from '@mui/material';
+import TopAppbar from './TopAppbar';
+import BottomBar from './BottomBar';
+import Loading from './Loading';
 
 
 export default function LayOut() {
@@ -40,15 +36,17 @@ export default function LayOut() {
             {loginState.logado ?
               <>
                 <Mensagem />
-                <Appbar />
+                <TopAppbar />
                 <Outlet />
                 <Toolbar />
-                <Footer />
-
+                <BottomBar />
+                {/*<Loading />*/}
 
               </> :
               <>
+                <Mensagem />
                 <Login />
+                {/*<Loading />*/}
               </>
             }
 

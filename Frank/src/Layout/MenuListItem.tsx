@@ -4,7 +4,7 @@ import Icon from '@mui/material/Icon';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ContextoGlobal, ContextoGlobalInterface } from '../Contextos/ContextoGlobal';
-import { MenuOpcoesInterface } from './Appbar';
+import { MenuOpcoesInterface } from './TopAppbar';
 
 interface PropsMenuItem {
     deslocamento: number

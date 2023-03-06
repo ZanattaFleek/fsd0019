@@ -33,6 +33,16 @@ export default function Login() {
 
   const logar = () => {
 
+   
+    setMensagemState( {
+      ...mensagemState,
+      exibir: true,
+      titulo: 'Autenticando!',
+      mensagem: 'Verificando usuário e senha',
+      tipo: MensagemTipo.Loading,
+      exibirBotao: false
+    } )
+  
     // http://localhost:3002/usuarios?usuario=Zanatta&senha=Fleek
 
     let urlPesquisa = URL_SERVIDOR.concat('/usuarios?usuario=')
@@ -41,6 +51,8 @@ export default function Login() {
     urlPesquisa = urlPesquisa.concat(login.senha)
 
     setTimeout(() => {
+      
+
 
       fetch(urlPesquisa).then(rs => {
         return rs.json()

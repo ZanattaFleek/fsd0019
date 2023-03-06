@@ -8,6 +8,7 @@ import { Avatar, Divider, Drawer, List, Menu, MenuItem, Tooltip, Typography } fr
 import { useNavigate } from 'react-router-dom';
 import MenuListItem from './MenuListItem';
 import { ContextoGlobal, ContextoGlobalInterface } from '../Contextos/ContextoGlobal';
+import { MensagemTipo } from '../GlobalStates/MensagemState';
 
 export interface MenuOpcoesInterface {
     descricao: string
@@ -107,6 +108,7 @@ const drawerWidth = 300;
 export default function Appbar() {
 
     const { layoutState, setLayoutState } = useContext(ContextoGlobal) as ContextoGlobalInterface
+    const { mensagemState, setMensagemState } = useContext(ContextoGlobal) as ContextoGlobalInterface
     const avatarLogin:string = (useContext(ContextoGlobal) as ContextoGlobalInterface).loginState.avatar
     const navegar = useNavigate();
 
@@ -130,10 +132,13 @@ export default function Appbar() {
         setLayoutState({ ...layoutState, exibirMenu: !layoutState.exibirMenu })
     };
 
+    const fecharLoading = () => {
+        setMensagemState({...mensagemState, exibir: false, tipo:MensagemTipo.Info})
+    }
     return (
         <>
             <Box sx={{ flexGrow: 1, height: 50 }}>
-                <AppBar >
+                <AppBar onLoad={fecharLoading}>
                     <Toolbar variant="dense">
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Menu">

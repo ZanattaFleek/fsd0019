@@ -1,26 +1,15 @@
 {
   "escola": [
     {
-      "cnpj": "20278531000158",
-      "email": "novaescola@bol.com.br",
-      "idEscola": 1,
-      "nome": "nova escola 364634635",
-      "ativo": false,
-      "tipo": "match",
-      "federacao": 2,
-      "veterinario": true,
-      "qualidade": 0.5
-    },
-    {
       "cnpj": "1321321312",
-      "email": "gsdgsdfgsdfgfdg",
+      "email": "bol@bol.com.br",
       "idEscola": 2,
-      "nome": "dados alterados",
+      "nome": "dados alteradosgfhdggf",
       "ativo": true,
       "tipo": "oficial",
       "federacao": 2,
       "veterinario": true,
-      "qualidade": 4
+      "qualidade": 5
     },
     {
       "cnpj": "XBXCVB",
@@ -28,7 +17,7 @@
       "idEscola": 3,
       "nome": "XCVBXCVBXBVCBXCVB",
       "ativo": false,
-      "tipo": "",
+      "tipo": "oficial",
       "federacao": "",
       "veterinario": false,
       "qualidade": 2
@@ -45,17 +34,6 @@
       "qualidade": 2
     },
     {
-      "cnpj": "XVCBXCVBCXVB",
-      "email": "XVBXCVB",
-      "idEscola": 5,
-      "nome": "XVBXCVBXCVBVCBVC",
-      "ativo": false,
-      "tipo": "match",
-      "federacao": "",
-      "veterinario": false,
-      "qualidade": 2
-    },
-    {
       "cnpj": "XCVBXCVBVCBCVB",
       "email": "",
       "idEscola": 6,
@@ -63,28 +41,6 @@
       "ativo": false,
       "tipo": "match",
       "federacao": 0,
-      "veterinario": true,
-      "qualidade": 2
-    },
-    {
-      "cnpj": "dfgdfgfdg",
-      "email": "",
-      "idEscola": 9,
-      "nome": "sgfdgfdgdfgfd",
-      "ativo": false,
-      "tipo": "",
-      "federacao": "",
-      "veterinario": false,
-      "qualidade": 4
-    },
-    {
-      "cnpj": "hfghdfghfghfgh",
-      "email": "dfghdfhgfh",
-      "idEscola": 11,
-      "nome": "dghdfhggfhfghfd",
-      "ativo": true,
-      "tipo": "oficial",
-      "federacao": "",
       "veterinario": true,
       "qualidade": 2
     },
@@ -423,6 +379,39 @@
       "email": "teste@bol.com.br",
       "idEscola": 44,
       "nome": "dfsgsdfgfdg",
+      "ativo": false,
+      "tipo": "",
+      "federacao": "",
+      "veterinario": false,
+      "qualidade": 2
+    },
+    {
+      "cnpj": "20278531000158",
+      "email": "jacare@jacare.com",
+      "idEscola": 45,
+      "nome": "sdfsdfsdf",
+      "ativo": false,
+      "tipo": "",
+      "federacao": "",
+      "veterinario": false,
+      "qualidade": 2
+    },
+    {
+      "cnpj": "20278531000158",
+      "email": "msg@msg.com",
+      "idEscola": 46,
+      "nome": "teste mensagem",
+      "ativo": true,
+      "tipo": "",
+      "federacao": "",
+      "veterinario": true,
+      "qualidade": 4
+    },
+    {
+      "cnpj": "20278531000158",
+      "email": "123@bol.com.br",
+      "idEscola": 47,
+      "nome": "12313",
       "ativo": false,
       "tipo": "",
       "federacao": "",
