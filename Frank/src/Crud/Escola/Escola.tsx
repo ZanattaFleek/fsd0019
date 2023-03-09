@@ -165,6 +165,7 @@ export default function Escola() {
     btPesquisar()
   }
 
+  
   const btConfirmarExclusao = () => {
 
     setTimeout(() => {
@@ -185,13 +186,14 @@ export default function Escola() {
             tipo: MensagemTipo.Sucesso,
             exibirBotao: true
           })
-
-
+          setEscola(ZeraDados)
+          setStatusForm(StatusForm.Pesquisando)
+          
         } else {
 
           setMensagemState({
             ...mensagemState,
-            titulo: 'Erro ao excluir',
+            titulo: 'Erro',
             exibir: true,
             mensagem: 'Erro ao excluir!',
             tipo: MensagemTipo.Error,
@@ -208,11 +210,9 @@ export default function Escola() {
           tipo: MensagemTipo.Error,
           exibirBotao: true
         })
-
       })
       
     }, TEMPO_REFRESH_TEMPORARIO)
-
   }
 
   const btConfirmarEdicao = () => {
@@ -236,7 +236,8 @@ export default function Escola() {
             tipo: MensagemTipo.Sucesso,
             exibirBotao: true
           })
-
+          setEscola(ZeraDados)
+          setStatusForm(StatusForm.Pesquisando)
 
         } else {
           setMensagemState({
@@ -283,6 +284,8 @@ export default function Escola() {
               tipo: MensagemTipo.Sucesso,
               exibirBotao: true
             })
+            setEscola(ZeraDados)
+            setStatusForm(StatusForm.Pesquisando)
 
           } else {
             setMensagemState({
@@ -304,7 +307,7 @@ export default function Escola() {
           })
         })
       }, TEMPO_REFRESH_TEMPORARIO)
-
+      
     } else {
       setMensagemState({
         ...mensagemState,
@@ -527,14 +530,17 @@ export default function Escola() {
 
             <Condicional condicao={statusForm === StatusForm.Incluindo}>
               <Button sx={{ mr: 2 }} startIcon={<CheckIcon />} variant="contained" onClick={btConfirmarInclusao}>Confirmar</Button>
+              
             </Condicional>
 
             <Condicional condicao={statusForm === StatusForm.Editando}>
               <Button sx={{ mr: 2 }} startIcon={<CheckIcon />} variant="contained" onClick={btConfirmarEdicao}>Confirmar</Button>
+              
             </Condicional>
 
             <Condicional condicao={statusForm === StatusForm.Excluindo}>
               <Button sx={{ mr: 2 }} startIcon={<CheckIcon />} variant="contained" onClick={btConfirmarExclusao}>Confirmar</Button>
+              
             </Condicional>
 
             <Condicional condicao={statusForm !== StatusForm.Pesquisando}>
